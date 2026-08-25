@@ -11,7 +11,7 @@ The system combines **Natural Language Processing (NLP), DistilBERT-based sentim
 - **Mugesh Kumar .K**
 - **Manikandan .AR** 
 - **Nandha Kishore .R** 
-- **Kavin prasanth .M** 
+- **Kavin Prasanth .M** 
 
 ---
 
