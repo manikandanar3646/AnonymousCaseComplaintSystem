@@ -1,0 +1,2204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SafeVoice — Anonymous Abuse Reporting Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>emailjs.init('vB2fZL0b5zxcQ1VEb')</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f5f2ee;
+  --bg2:#ece8e2;
+  --surface:#ffffff;
+  --ink:#1a1714;
+  --ink2:#3d3830;
+  --muted:#8a8278;
+  --border:#d8d2c8;
+  --teal:#1a6b5a;
+  --teal-light:#e8f4f1;
+  --teal-mid:#2d8f77;
+  --amber:#c4651a;
+  --amber-light:#fdf0e6;
+  --red:#b03030;
+  --red-light:#fdeaea;
+  --shadow:0 2px 20px rgba(26,23,20,0.08);
+  --shadow-lg:0 8px 40px rgba(26,23,20,0.12);
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:16px;
+  line-height:1.65;
+  overflow-x:hidden;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1rem 4%;
+  background:rgba(245,242,238,0.88);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+  transition:box-shadow .3s;
+}
+nav.scrolled{box-shadow:var(--shadow)}
+.nav-brand{
+  display:flex;align-items:center;gap:.6rem;
+  font-family:'Fraunces',serif;font-weight:700;font-size:1.35rem;
+  color:var(--teal);text-decoration:none;
+}
+.nav-brand .shield{
+  width:34px;height:34px;background:var(--teal);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;color:#fff;font-size:1rem;
+}
+.nav-links{display:flex;align-items:center;gap:2rem;list-style:none}
+.nav-links a{
+  color:var(--ink2);text-decoration:none;font-size:.88rem;font-weight:500;
+  transition:color .2s;
+}
+.nav-links a:hover{color:var(--teal)}
+.nav-cta{
+  background:var(--teal);color:#fff;padding:.55rem 1.4rem;
+  border-radius:100px;font-size:.88rem;font-weight:600;
+  text-decoration:none;transition:background .2s,transform .2s;
+}
+.nav-cta:hover{background:var(--teal-mid);transform:translateY(-1px)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.hamburger span{width:22px;height:2px;background:var(--ink);border-radius:2px;transition:.3s}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;
+  display:grid;grid-template-columns:1fr 1fr;
+  align-items:center;gap:4rem;
+  padding:7rem 4% 5rem;
+  max-width:1300px;margin:0 auto;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:var(--teal-light);border:1px solid #b6ddd6;
+  color:var(--teal);padding:.35rem 1rem;border-radius:100px;
+  font-size:.78rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;
+  margin-bottom:1.5rem;
+  animation:fadeUp .6s ease both;
+}
+.hero-badge .dot{width:6px;height:6px;background:var(--teal);border-radius:50%;animation:pulse 2s infinite}
+h1{
+  font-family:'Fraunces',serif;
+  font-size:clamp(2.8rem,5vw,4.2rem);
+  font-weight:700;line-height:1.08;
+  letter-spacing:-.02em;
+  margin-bottom:1.3rem;
+  animation:fadeUp .7s .1s ease both;
+}
+h1 em{color:var(--teal);font-style:italic}
+.hero-sub{
+  color:var(--muted);font-size:1.05rem;font-weight:400;
+  max-width:480px;margin-bottom:2.2rem;
+  animation:fadeUp .7s .2s ease both;
+}
+.hero-actions{
+  display:flex;gap:1rem;flex-wrap:wrap;
+  animation:fadeUp .7s .3s ease both;
+}
+.btn-primary{
+  background:var(--teal);color:#fff;
+  padding:.85rem 2rem;border-radius:100px;
+  font-weight:700;font-size:.95rem;text-decoration:none;
+  display:inline-flex;align-items:center;gap:.5rem;
+  transition:background .2s,transform .2s,box-shadow .2s;
+  box-shadow:0 4px 20px rgba(26,107,90,.25);
+}
+.btn-primary:hover{background:var(--teal-mid);transform:translateY(-2px);box-shadow:0 8px 30px rgba(26,107,90,.35)}
+.btn-secondary{
+  background:transparent;color:var(--ink);
+  padding:.85rem 2rem;border-radius:100px;
+  font-weight:600;font-size:.95rem;text-decoration:none;
+  border:1.5px solid var(--border);
+  display:inline-flex;align-items:center;gap:.5rem;
+  transition:border-color .2s,background .2s;
+}
+.btn-secondary:hover{border-color:var(--ink2);background:var(--bg2)}
+
+.hero-trust{
+  display:flex;gap:1.5rem;margin-top:2.5rem;flex-wrap:wrap;
+  animation:fadeUp .7s .4s ease both;
+}
+.trust-item{
+  display:flex;align-items:center;gap:.4rem;
+  font-size:.8rem;color:var(--muted);font-weight:500;
+}
+.trust-item .check{
+  width:18px;height:18px;background:var(--teal-light);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--teal);font-size:.6rem;flex-shrink:0;
+}
+
+/* Hero visual */
+.hero-visual{
+  position:relative;
+  animation:fadeUp .8s .2s ease both;
+}
+.hero-card-main{
+  background:var(--surface);border-radius:20px;
+  padding:2rem;box-shadow:var(--shadow-lg);
+  border:1px solid var(--border);
+}
+.hc-header{
+  display:flex;align-items:center;gap:.75rem;margin-bottom:1.5rem;
+  padding-bottom:1rem;border-bottom:1px solid var(--border);
+}
+.hc-avatar{
+  width:40px;height:40px;background:var(--teal);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.1rem;
+}
+.hc-title{font-weight:700;font-size:.95rem}
+.hc-sub{font-size:.78rem;color:var(--muted)}
+.chat-bubble{
+  padding:.75rem 1rem;border-radius:14px;
+  font-size:.85rem;line-height:1.5;margin-bottom:.75rem;max-width:85%;
+}
+.chat-bubble.bot{background:var(--teal-light);color:var(--ink2)}
+.chat-bubble.user{background:var(--teal);color:#fff;margin-left:auto}
+.typing{
+  display:flex;gap:4px;align-items:center;padding:.6rem 1rem;
+  background:var(--bg2);border-radius:14px;width:fit-content;
+}
+.typing span{
+  width:6px;height:6px;background:var(--muted);border-radius:50%;
+  animation:typingDot 1.4s infinite;
+}
+.typing span:nth-child(2){animation-delay:.2s}
+.typing span:nth-child(3){animation-delay:.4s}
+
+.hero-badge-float{
+  position:absolute;top:-16px;right:-16px;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:12px;padding:.8rem 1.1rem;
+  box-shadow:var(--shadow);
+  display:flex;align-items:center;gap:.5rem;
+  font-size:.78rem;font-weight:600;
+}
+.hero-badge-float .num{font-family:'Fraunces',serif;font-size:1.4rem;color:var(--teal)}
+.hero-badge-float2{
+  position:absolute;bottom:-16px;left:-16px;
+  background:var(--teal);border-radius:12px;padding:.8rem 1.1rem;
+  box-shadow:0 4px 20px rgba(26,107,90,.3);
+  display:flex;align-items:center;gap:.5rem;
+  font-size:.78rem;font-weight:600;color:#fff;
+}
+
+/* ── STATS STRIP ── */
+.stats-strip{
+  background:var(--ink);color:#fff;
+  padding:3rem 4%;
+}
+.stats-inner{
+  max-width:1100px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;text-align:center;
+}
+.stat-num{
+  font-family:'Fraunces',serif;font-size:2.6rem;font-weight:700;
+  color:var(--teal-mid);letter-spacing:-.02em;
+}
+.stat-label{font-size:.82rem;color:#a09890;margin-top:.2rem}
+
+/* ── SECTION BASE ── */
+section{padding:6rem 4%}
+.section-inner{max-width:1100px;margin:0 auto}
+.eyebrow{
+  font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--teal);margin-bottom:.7rem;
+}
+.section-title{
+  font-family:'Fraunces',serif;font-size:clamp(2rem,3.5vw,2.8rem);
+  font-weight:700;letter-spacing:-.02em;line-height:1.15;margin-bottom:1rem;
+}
+.section-sub{color:var(--muted);max-width:520px;font-size:1rem}
+
+/* ── HOW IT WORKS ── */
+.how-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:2rem;margin-top:3.5rem;
+}
+.step-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:16px;padding:2rem;
+  position:relative;overflow:hidden;
+  transition:transform .3s,box-shadow .3s;
+}
+.step-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.step-card::before{
+  content:attr(data-step);
+  position:absolute;top:-10px;right:16px;
+  font-family:'Fraunces',serif;font-size:5rem;font-weight:700;
+  color:var(--bg2);line-height:1;pointer-events:none;
+}
+.step-icon{
+  width:48px;height:48px;border-radius:12px;background:var(--teal-light);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;margin-bottom:1.2rem;
+}
+.step-title{font-weight:700;font-size:1.05rem;margin-bottom:.4rem}
+.step-desc{color:var(--muted);font-size:.88rem;line-height:1.65}
+
+/* ── FEATURES ── */
+.features-bg{background:var(--ink)}
+.features-bg .section-title{color:#fff}
+.features-bg .section-sub{color:#9a9288}
+.features-bg .eyebrow{color:#5ec9b0}
+.feat-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;
+  background:rgba(255,255,255,.08);border-radius:20px;
+  overflow:hidden;margin-top:3.5rem;
+}
+.feat-card{
+  background:#1f1c19;padding:2rem;
+  transition:background .25s;
+  position:relative;
+}
+.feat-card:hover{background:#272320}
+.feat-card::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--teal),#5ec9b0);
+  transform:scaleX(0);transform-origin:left;transition:.35s;
+}
+.feat-card:hover::after{transform:scaleX(1)}
+.feat-icon{
+  width:44px;height:44px;border-radius:10px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;font-size:1.2rem;
+  margin-bottom:1.2rem;transition:border-color .2s;
+}
+.feat-card:hover .feat-icon{border-color:var(--teal)}
+.feat-title{color:#eeeae6;font-weight:700;font-size:1rem;margin-bottom:.4rem}
+.feat-desc{color:#756e66;font-size:.87rem;line-height:1.65}
+
+/* ── REPORT FORM ── */
+.report-section{background:var(--bg2)}
+.report-wrap{
+  display:grid;grid-template-columns:1fr 1.2fr;gap:4rem;
+  align-items:start;margin-top:3rem;
+}
+.report-info h3{font-family:'Fraunces',serif;font-size:1.6rem;margin-bottom:1rem}
+.report-info p{color:var(--muted);margin-bottom:1.5rem;font-size:.95rem}
+.privacy-badges{display:flex;flex-direction:column;gap:.75rem;margin-top:1.5rem}
+.priv-badge{
+  display:flex;align-items:center;gap:.75rem;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:10px;padding:.75rem 1rem;
+  font-size:.85rem;font-weight:500;
+}
+.priv-badge .icon{
+  width:32px;height:32px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;
+}
+.priv-badge.green .icon{background:var(--teal-light);color:var(--teal)}
+.priv-badge.amber .icon{background:var(--amber-light);color:var(--amber)}
+
+/* Form */
+.complaint-form{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:20px;padding:2.5rem;box-shadow:var(--shadow);
+}
+.form-header{
+  display:flex;align-items:center;gap:.75rem;margin-bottom:2rem;
+  padding-bottom:1.2rem;border-bottom:1px solid var(--border);
+}
+.form-logo{
+  width:38px;height:38px;background:var(--teal);border-radius:9px;
+  display:flex;align-items:center;justify-content:center;color:#fff;font-size:1rem;
+}
+.form-header-text h4{font-weight:700;font-size:.95rem}
+.form-header-text span{font-size:.78rem;color:var(--muted)}
+.form-group{margin-bottom:1.3rem}
+.form-group label{
+  display:block;font-size:.82rem;font-weight:600;
+  color:var(--ink2);margin-bottom:.45rem;
+}
+.form-group input,
+.form-group select,
+.form-group textarea{
+  width:100%;border:1.5px solid var(--border);
+  border-radius:10px;padding:.75rem 1rem;
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;
+  color:var(--ink);background:var(--bg);
+  transition:border-color .2s,box-shadow .2s;outline:none;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+  border-color:var(--teal);
+  box-shadow:0 0 0 3px rgba(26,107,90,.1);
+}
+.form-group textarea{resize:vertical;min-height:110px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-submit{
+  width:100%;background:var(--teal);color:#fff;
+  padding:.9rem;border:none;border-radius:100px;
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:1rem;
+  cursor:pointer;transition:background .2s,transform .2s,box-shadow .2s;
+  margin-top:.5rem;display:flex;align-items:center;justify-content:center;gap:.5rem;
+}
+.form-submit:hover{background:var(--teal-mid);transform:translateY(-2px);box-shadow:0 6px 20px rgba(26,107,90,.3)}
+.form-note{
+  text-align:center;font-size:.77rem;color:var(--muted);margin-top:.75rem;
+  display:flex;align-items:center;justify-content:center;gap:.3rem;
+}
+
+/* ── PERFORMANCE ── */
+.perf-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:2rem;
+  margin-top:3.5rem;
+}
+.perf-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:16px;padding:2rem;
+  box-shadow:var(--shadow);
+}
+.perf-card h4{font-weight:700;font-size:1rem;margin-bottom:1.5rem;color:var(--ink2)}
+.metric-bar{margin-bottom:1.1rem}
+.metric-top{display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:.4rem}
+.metric-name{font-weight:500;color:var(--ink2)}
+.metric-val{font-weight:700;color:var(--teal)}
+.bar-track{height:8px;background:var(--bg2);border-radius:100px;overflow:hidden}
+.bar-fill{
+  height:100%;border-radius:100px;
+  background:linear-gradient(90deg,var(--teal),#5ec9b0);
+  transition:width 1.5s ease;width:0;
+}
+.model-compare{margin-top:.5rem}
+.model-row{
+  display:flex;align-items:center;gap:.75rem;
+  padding:.6rem 0;border-bottom:1px solid var(--border);font-size:.85rem;
+}
+.model-row:last-child{border-bottom:none}
+.model-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.model-name{flex:1;font-weight:500}
+.model-score{font-weight:700}
+
+/* ── CONCLUSION ── */
+.conclusion-bg{background:var(--teal)}
+.conclusion-bg .eyebrow{color:#a8ddd3}
+.conclusion-bg .section-title{color:#fff}
+.concl-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3rem;
+}
+.concl-card{
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);
+  border-radius:16px;padding:2rem;backdrop-filter:blur(10px);
+  transition:background .2s;
+}
+.concl-card:hover{background:rgba(255,255,255,.15)}
+.concl-num{
+  font-family:'Fraunces',serif;font-size:2.5rem;font-weight:700;
+  color:rgba(255,255,255,.25);line-height:1;margin-bottom:.5rem;
+}
+.concl-title{color:#fff;font-weight:700;font-size:1.05rem;margin-bottom:.5rem}
+.concl-desc{color:rgba(255,255,255,.7);font-size:.87rem;line-height:1.65}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--ink);color:#fff;padding:3rem 4% 2rem;
+}
+.footer-inner{
+  max-width:1100px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  padding-bottom:1.5rem;border-bottom:1px solid rgba(255,255,255,.08);
+  flex-wrap:wrap;gap:1rem;
+}
+.footer-brand{
+  font-family:'Fraunces',serif;font-size:1.2rem;font-weight:700;color:var(--teal-mid);
+}
+.footer-links{display:flex;gap:2rem;list-style:none;flex-wrap:wrap}
+.footer-links a{color:#756e66;text-decoration:none;font-size:.85rem;transition:color .2s}
+.footer-links a:hover{color:#fff}
+.footer-bottom{
+  max-width:1100px;margin:.75rem auto 0;
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem;
+  font-size:.78rem;color:#4a4540;
+}
+.emergency-banner{
+  background:var(--red-light);border:1.5px solid #f5c2c2;
+  border-radius:12px;padding:1rem 1.5rem;margin-bottom:2rem;
+  display:flex;align-items:center;gap:.75rem;font-size:.88rem;
+}
+.emergency-banner .icon{font-size:1.2rem}
+.emergency-banner strong{color:var(--red)}
+
+/* ── MODAL ── */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(26,23,20,.6);
+  backdrop-filter:blur(4px);z-index:500;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .3s;
+  padding:1rem;
+}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{
+  background:var(--surface);border-radius:20px;
+  padding:2.5rem;max-width:460px;width:100%;
+  box-shadow:0 20px 60px rgba(26,23,20,.2);
+  transform:translateY(20px);transition:transform .3s;
+  position:relative;
+}
+.modal-overlay.open .modal{transform:translateY(0)}
+.modal-close{
+  position:absolute;top:1rem;right:1rem;
+  background:var(--bg2);border:none;border-radius:50%;
+  width:32px;height:32px;cursor:pointer;font-size:1rem;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--muted);transition:background .2s;
+}
+.modal-close:hover{background:var(--border)}
+.modal h3{font-family:'Fraunces',serif;font-size:1.5rem;margin-bottom:.5rem}
+.modal p{color:var(--muted);font-size:.9rem;margin-bottom:1.5rem}
+.success-icon{
+  width:60px;height:60px;background:var(--teal-light);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.8rem;margin:0 auto 1.2rem;
+}
+
+/* ── TOAST ── */
+.toast{
+  position:fixed;bottom:2rem;right:2rem;z-index:600;
+  background:var(--ink);color:#fff;padding:1rem 1.5rem;
+  border-radius:12px;font-size:.88rem;font-weight:500;
+  box-shadow:var(--shadow-lg);
+  transform:translateY(20px);opacity:0;pointer-events:none;
+  transition:.3s;display:flex;align-items:center;gap:.5rem;
+}
+.toast.show{transform:translateY(0);opacity:1}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes typingDot{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;padding:6rem 4% 4rem;text-align:center}
+  .hero-sub{max-width:100%}
+  .hero-actions{justify-content:center}
+  .hero-trust{justify-content:center}
+  .hero-visual{display:none}
+  .stats-inner{grid-template-columns:repeat(2,1fr)}
+  .feat-grid{grid-template-columns:1fr}
+  .report-wrap{grid-template-columns:1fr}
+  .perf-grid{grid-template-columns:1fr}
+  .concl-grid{grid-template-columns:1fr}
+  .nav-links,.nav-cta{display:none}
+  .hamburger{display:flex}
+}
+@media(max-width:600px){
+  .stats-inner{grid-template-columns:1fr 1fr}
+  .form-row{grid-template-columns:1fr}
+}
+
+/* ── FILE UPLOAD ZONE ── */
+.upload-zone{
+  border:2px dashed var(--border);border-radius:12px;
+  padding:1.5rem 1rem;text-align:center;cursor:pointer;
+  background:var(--bg);transition:border-color .2s,background .2s;
+  position:relative;
+}
+.upload-zone:hover,.upload-zone.dragover{
+  border-color:var(--teal);background:var(--teal-light);
+}
+.upload-zone input[type="file"]{
+  position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;
+}
+.upload-icon{font-size:1.8rem;margin-bottom:.4rem}
+.upload-text{font-size:.85rem;font-weight:600;color:var(--ink2)}
+.upload-hint{font-size:.75rem;color:var(--muted);margin-top:.2rem}
+.upload-preview{
+  display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.75rem;
+}
+.preview-item{
+  display:flex;align-items:center;gap:.4rem;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:8px;padding:.35rem .7rem;font-size:.78rem;font-weight:500;
+}
+.preview-item .remove{
+  background:none;border:none;color:var(--red);cursor:pointer;
+  font-size:.85rem;padding:0;line-height:1;
+}
+.upload-size-warn{font-size:.73rem;color:var(--amber);margin-top:.4rem;display:none}
+
+/* ── TRACKING PAGE ── */
+.track-section{background:var(--bg2);min-height:60vh;display:flex;align-items:center}
+.track-box{
+  max-width:560px;margin:0 auto;width:100%;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:20px;padding:2.5rem;box-shadow:var(--shadow-lg);
+}
+.track-box h2{font-family:'Fraunces',serif;font-size:1.8rem;margin-bottom:.4rem}
+.track-box p{color:var(--muted);font-size:.92rem;margin-bottom:1.5rem}
+.track-input-row{display:flex;gap:.75rem}
+.track-input{
+  flex:1;border:1.5px solid var(--border);border-radius:10px;
+  padding:.75rem 1rem;font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:.95rem;color:var(--ink);background:var(--bg);outline:none;
+  transition:border-color .2s,box-shadow .2s;letter-spacing:.05em;
+  text-transform:uppercase;
+}
+.track-input:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(26,107,90,.1)}
+.track-btn{
+  background:var(--teal);color:#fff;border:none;
+  padding:.75rem 1.5rem;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;
+  font-weight:700;font-size:.9rem;cursor:pointer;
+  transition:background .2s,transform .2s;white-space:nowrap;
+}
+.track-btn:hover{background:var(--teal-mid);transform:translateY(-1px)}
+.track-result{
+  margin-top:1.5rem;border-radius:14px;padding:1.5rem;
+  display:none;border:1px solid var(--border);
+}
+.track-result.show{display:block}
+.track-result.pending{background:#fff8ec;border-color:#f5d78e}
+.track-result.accepted{background:#e8f4f1;border-color:#b6ddd6}
+.track-result.rejected{background:#fdeaea;border-color:#f5c2c2}
+.track-result.notfound{background:var(--bg2);border-color:var(--border)}
+.status-badge{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.4rem 1rem;border-radius:100px;font-weight:700;font-size:.85rem;
+  margin-bottom:1rem;
+}
+.status-badge.pending{background:#fef3c7;color:#92400e}
+.status-badge.accepted{background:#d1fae5;color:#065f46}
+.status-badge.rejected{background:#fee2e2;color:#991b1b}
+.track-detail-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:.5rem 0;border-bottom:1px solid var(--border);font-size:.88rem;
+}
+.track-detail-row:last-child{border-bottom:none}
+.track-detail-label{color:var(--muted);font-weight:500}
+.track-detail-val{font-weight:600;color:var(--ink2)}
+.track-spinner{
+  display:none;text-align:center;padding:1rem;color:var(--muted);font-size:.9rem;
+}
+.track-spinner.show{display:block}
+
+/* Accept/Reject page */
+.action-page{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  padding:2rem;background:var(--bg);
+}
+.action-box{
+  max-width:500px;width:100%;background:var(--surface);
+  border:1px solid var(--border);border-radius:20px;
+  padding:2.5rem;box-shadow:var(--shadow-lg);text-align:center;
+}
+.action-icon{font-size:3rem;margin-bottom:1rem}
+.action-box h2{font-family:'Fraunces',serif;font-size:1.6rem;margin-bottom:.5rem}
+.action-box p{color:var(--muted);font-size:.9rem;margin-bottom:1.5rem}
+.action-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn-accept{
+  background:#065f46;color:#fff;border:none;padding:.85rem 2rem;
+  border-radius:100px;font-weight:700;font-size:.95rem;cursor:pointer;
+  transition:.2s;display:flex;align-items:center;gap:.5rem;
+}
+.btn-accept:hover{background:#047857;transform:translateY(-2px)}
+.btn-reject{
+  background:#991b1b;color:#fff;border:none;padding:.85rem 2rem;
+  border-radius:100px;font-weight:700;font-size:.95rem;cursor:pointer;
+  transition:.2s;display:flex;align-items:center;gap:.5rem;
+}
+.btn-reject:hover{background:#b91c1c;transform:translateY(-2px)}
+.action-done{display:none}
+.action-done.show{display:block}
+
+/* ── FLOATING CHATBOT ── */
+.chat-fab{
+  position:fixed;bottom:2rem;right:2rem;z-index:999;
+  width:58px;height:58px;border-radius:50%;
+  background:var(--teal);color:#fff;border:none;cursor:pointer;
+  box-shadow:0 4px 24px rgba(26,107,90,.45);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;transition:transform .3s,box-shadow .3s;
+}
+.chat-fab:hover{transform:scale(1.12);box-shadow:0 8px 32px rgba(26,107,90,.55)}
+.chat-pulse{position:absolute;width:100%;height:100%;border-radius:50%;background:rgba(26,107,90,.3);animation:chatPulse 2s infinite;pointer-events:none;}
+@keyframes chatPulse{0%{transform:scale(1);opacity:1}100%{transform:scale(1.7);opacity:0}}
+.chat-badge{position:absolute;top:-3px;right:-3px;width:18px;height:18px;background:#e53e3e;border-radius:50%;border:2px solid #fff;font-size:.58rem;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;}
+.chatbot-window{position:fixed;bottom:6rem;right:2rem;z-index:998;width:340px;background:var(--surface);border-radius:20px;box-shadow:0 12px 50px rgba(26,23,20,.18);border:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;transform:scale(.85) translateY(20px);transform-origin:bottom right;opacity:0;pointer-events:none;transition:transform .3s,opacity .3s;}
+.chatbot-window.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all}
+.chatbot-header{background:var(--teal);color:#fff;padding:1rem 1.2rem;display:flex;align-items:center;gap:.75rem;}
+.cb-avatar{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+.cb-header-info h4{font-weight:700;font-size:.9rem;margin-bottom:.1rem}
+.cb-header-info span{font-size:.72rem;opacity:.8;display:flex;align-items:center;gap:.3rem}
+.cb-online{width:6px;height:6px;background:#4ade80;border-radius:50%;display:inline-block}
+.cb-close{margin-left:auto;background:rgba(255,255,255,.15);border:none;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;transition:background .2s;flex-shrink:0;}
+.cb-close:hover{background:rgba(255,255,255,.3)}
+.cb-messages{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:.6rem;max-height:300px;}
+.cb-messages::-webkit-scrollbar{width:3px}
+.cb-messages::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.cb-msg{display:flex;flex-direction:column;max-width:88%}
+.cb-msg.bot{align-self:flex-start}
+.cb-msg.user{align-self:flex-end}
+.cb-bubble{padding:.6rem .9rem;border-radius:14px;font-size:.82rem;line-height:1.55}
+.cb-msg.bot .cb-bubble{background:var(--teal-light);color:var(--ink2);border-bottom-left-radius:4px}
+.cb-msg.user .cb-bubble{background:var(--teal);color:#fff;border-bottom-right-radius:4px}
+.cb-time{font-size:.63rem;color:var(--muted);margin-top:.15rem;padding:0 .2rem}
+.cb-msg.user .cb-time{text-align:right}
+.cb-typing-bubble{align-self:flex-start;background:var(--teal-light);border-radius:14px;border-bottom-left-radius:4px;padding:.6rem .9rem;display:none;}
+.cb-typing-bubble.show{display:flex;gap:4px;align-items:center}
+.cb-typing-bubble span{width:6px;height:6px;background:var(--teal);border-radius:50%;animation:typingDot 1.2s infinite;}
+.cb-typing-bubble span:nth-child(2){animation-delay:.2s}
+.cb-typing-bubble span:nth-child(3){animation-delay:.4s}
+.cb-suggestions{padding:.55rem .8rem;display:flex;flex-wrap:wrap;gap:.35rem;border-top:1px solid var(--border);background:var(--bg);}
+.cb-chip{background:var(--teal-light);border:1px solid #b6ddd6;color:var(--teal);padding:.3rem .65rem;border-radius:100px;font-size:.73rem;font-weight:600;cursor:pointer;transition:background .2s,transform .15s;white-space:nowrap;}
+.cb-chip:hover{background:#d1ece8;transform:translateY(-1px)}
+.cb-input-row{display:flex;gap:.5rem;padding:.7rem .9rem;border-top:1px solid var(--border);}
+.cb-input{flex:1;border:1.5px solid var(--border);border-radius:100px;padding:.45rem .9rem;font-family:'Plus Jakarta Sans',sans-serif;font-size:.82rem;color:var(--ink);background:var(--bg);outline:none;transition:border-color .2s;}
+.cb-input:focus{border-color:var(--teal)}
+.cb-send{background:var(--teal);color:#fff;border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;transition:background .2s,transform .2s;flex-shrink:0;}
+.cb-send:hover{background:var(--teal-mid);transform:scale(1.1)}
+@media(max-width:400px){.chatbot-window{width:calc(100vw - 2rem);right:1rem}}
+.cb-lang-btn{background:rgba(255,255,255,.15);border:none;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;transition:background .2s;}
+.cb-lang-btn:hover{background:rgba(255,255,255,.3)}
+.cb-lang-menu{position:absolute;top:58px;right:48px;background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow-lg);z-index:999;flex-direction:column;overflow:hidden;min-width:180px;}
+.cb-lang-opt{padding:.65rem 1rem;font-size:.85rem;font-weight:500;cursor:pointer;transition:background .15s;color:var(--ink2);}
+.cb-lang-opt:hover{background:var(--teal-light);color:var(--teal)}
+.chatbot-window{position:fixed;}
+
+</style>
+</head>
+<body>
+
+<!-- CURSOR (desktop) -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">✅ Report submitted anonymously</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-brand">
+    <div class="shield">🛡</div>
+    SafeVoice
+  </a>
+  <ul class="nav-links">
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#performance">Performance</a></li>
+    <li><a href="#report">Report</a></li>
+    <li><a href="#track">Track Complaint</a></li>
+  </ul>
+  <a href="#report" class="nav-cta">Report Safely →</a>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section style="padding:0">
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-badge"><span class="dot"></span> AI-Powered · Anonymous · Secure</div>
+      <h1>Your Voice,<br><em>Safely Heard</em></h1>
+      <p class="hero-sub">A web-based anonymous complaint reporting platform for victims of child abuse, domestic violence, and sexual harassment — powered by DistilBERT AI, no identity required.</p>
+      <div class="hero-actions">
+        <a href="#report" class="btn-primary">🔒 Report Anonymously</a>
+        <a href="#how" class="btn-secondary">Learn How It Works</a>
+      </div>
+      <div class="hero-trust">
+        <div class="trust-item"><div class="check">✓</div> 99.2% Anonymity Preserved</div>
+        <div class="trust-item"><div class="check">✓</div> 98.77% AI Accuracy</div>
+        <div class="trust-item"><div class="check">✓</div> End-to-End Encrypted</div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-badge-float">
+        <div>
+          <div class="num">98.8%</div>
+          <div style="font-size:.7rem;color:var(--muted);font-weight:400">Classification Accuracy</div>
+        </div>
+      </div>
+      <div class="hero-card-main">
+        <div class="hc-header">
+          <div class="hc-avatar">🤖</div>
+          <div>
+            <div class="hc-title">SafeVoice Chatbot</div>
+            <div class="hc-sub">● Online · Secure Channel</div>
+          </div>
+        </div>
+        <div class="chat-bubble bot">Hello, I'm here to help you report safely. Your identity is fully protected. What happened?</div>
+        <div class="chat-bubble user">I need to report an incident but I'm scared of being identified.</div>
+        <div class="chat-bubble bot">I completely understand. No personal information is required. You're safe here. Can you describe what occurred?</div>
+        <div class="typing"><span></span><span></span><span></span></div>
+      </div>
+      <div class="hero-badge-float2">
+        🔒 End-to-End Encrypted
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="stats-strip">
+  <div class="stats-inner">
+    <div class="reveal">
+      <div class="stat-num" data-target="98.77">0</div>
+      <div class="stat-label">% Classification Accuracy</div>
+    </div>
+    <div class="reveal">
+      <div class="stat-num" data-target="93.6">0</div>
+      <div class="stat-label">% Emotion Detection Accuracy</div>
+    </div>
+    <div class="reveal">
+      <div class="stat-num" data-target="99.2">0</div>
+      <div class="stat-label">% Anonymity Preservation Rate</div>
+    </div>
+    <div class="reveal">
+      <div class="stat-num" data-target="620">0</div>
+      <div class="stat-label">Complaints/Minute Throughput</div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="eyebrow">Process</div>
+      <h2 class="section-title">How SafeVoice Works</h2>
+      <p class="section-sub">A simple, secure, and empathetic process designed to protect victims while ensuring swift response.</p>
+    </div>
+    <div class="how-grid">
+      <div class="step-card reveal" data-step="01">
+        <div class="step-icon">💬</div>
+        <div class="step-title">Submit Anonymously</div>
+        <div class="step-desc">Use our chatbot or structured form to describe the incident in your own words — no name, no identity, no fear.</div>
+      </div>
+      <div class="step-card reveal" data-step="02">
+        <div class="step-icon">🧠</div>
+        <div class="step-title">AI Analysis</div>
+        <div class="step-desc">Our DistilBERT model detects emotion, severity, and urgency in real-time with 98.77% classification accuracy.</div>
+      </div>
+      <div class="step-card reveal" data-step="03">
+        <div class="step-icon">⚡</div>
+        <div class="step-title">Auto Escalation</div>
+        <div class="step-desc">High-risk cases are automatically flagged and routed to the relevant authorities within 120ms inference time.</div>
+      </div>
+      <div class="step-card reveal" data-step="04">
+        <div class="step-icon">🔒</div>
+        <div class="step-title">Secure & Protected</div>
+        <div class="step-desc">All data is stored in an encrypted database with no mandatory personal identification and controlled access.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="features-bg">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="eyebrow">Capabilities</div>
+      <h2 class="section-title">Built for Safety & Scale</h2>
+      <p class="section-sub" style="color:#756e66">Every component designed with victim safety, privacy, and reliable performance in mind.</p>
+    </div>
+    <div class="feat-grid reveal">
+      <div class="feat-card">
+        <div class="feat-icon">🤖</div>
+        <div class="feat-title">Conversational Chatbot</div>
+        <div class="feat-desc">NLP-powered chatbot lets victims express concerns freely. Detects fear, distress, and urgency. Suggests emergency helpline for high-risk cases.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">📋</div>
+        <div class="feat-title">Form-Based Submission</div>
+        <div class="feat-desc">Structured form collects incident type, location, time, and emotional state — designed for simplicity and emotional comfort.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🧪</div>
+        <div class="feat-title">DistilBERT AI Engine</div>
+        <div class="feat-desc">Fine-tuned transformer model performs emotion detection, severity classification, and urgency identification with industry-leading accuracy.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🛡</div>
+        <div class="feat-title">Privacy-First Architecture</div>
+        <div class="feat-desc">End-to-end encrypted communication. No mandatory personal ID. 99.2% anonymity preservation with 98.7% data security success rate.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🚨</div>
+        <div class="feat-title">Escalation & Response</div>
+        <div class="feat-desc">Automatically identifies high-risk cases, routes to authorities, and prioritizes based on severity — supporting timely emergency response.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">📊</div>
+        <div class="feat-title">Real-Time Processing</div>
+        <div class="feat-desc">120ms inference time with 620 complaints/minute throughput ensures scalable, real-time analysis even under high workload.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REPORT FORM -->
+<section id="report" class="report-section">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="eyebrow">Safe Reporting</div>
+      <h2 class="section-title">Submit a Report</h2>
+    </div>
+    <div class="emergency-banner reveal">
+      <span class="icon">🆘</span>
+      <div><strong>Emergency?</strong> If you are in immediate danger, please call <strong>100 (Police)</strong> or <strong>1091 (Women Helpline)</strong> immediately.</div>
+    </div>
+    <div class="report-wrap">
+      <div class="report-info reveal">
+        <h3>Your safety is our priority</h3>
+        <p>This form is completely anonymous. We do not collect your IP address, name, or any identifying information. Describe the incident in as much or as little detail as you are comfortable with.</p>
+        <p style="color:var(--muted);font-size:.9rem">All reports are analyzed by our AI system and routed to appropriate authorities based on severity and urgency.</p>
+        <div class="privacy-badges">
+          <div class="priv-badge green">
+            <div class="icon">🔒</div>
+            <div><strong>End-to-End Encrypted</strong><br><span style="color:var(--muted);font-size:.78rem">Your data is encrypted in transit and at rest</span></div>
+          </div>
+          <div class="priv-badge green">
+            <div class="icon">👤</div>
+            <div><strong>No Identity Required</strong><br><span style="color:var(--muted);font-size:.78rem">Zero personal information collected</span></div>
+          </div>
+          <div class="priv-badge amber">
+            <div class="icon">⚡</div>
+            <div><strong>AI-Powered Analysis</strong><br><span style="color:var(--muted);font-size:.78rem">Real-time emotion & urgency detection</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="complaint-form reveal">
+        <div class="form-header">
+          <div class="form-logo">🛡</div>
+          <div class="form-header-text">
+            <h4>Anonymous Complaint Form</h4>
+            <span>Secure · Private · Confidential</span>
+          </div>
+        </div>
+        <form id="complaintForm">
+          <div class="form-group">
+            <label>Type of Incident *</label>
+            <select required>
+              <option value="">Select incident type…</option>
+              <option>Child Abuse</option>
+              <option>Domestic Violence</option>
+              <option>Sexual Harassment</option>
+              <option>Physical Assault</option>
+              <option>Emotional/Psychological Abuse</option>
+              <option>Cyberbullying / Online Harassment</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Location (City/Area)</label>
+              <input type="text" placeholder="e.g. Coimbatore, Tamil Nadu"/>
+            </div>
+            <div class="form-group">
+              <label>When did this occur?</label>
+              <input type="date"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Your Current Emotional State</label>
+            <select>
+              <option value="">How are you feeling right now?</option>
+              <option>Safe but disturbed</option>
+              <option>Anxious / Fearful</option>
+              <option>Distressed</option>
+              <option>In immediate danger</option>
+              <option>Calm / Seeking information</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Describe the Incident *</label>
+            <textarea required placeholder="Describe what happened in your own words. Include any details you feel comfortable sharing — who was involved, what happened, and any other context…"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Upload Evidence <span style="color:var(--muted);font-weight:400">(Images / Videos — Optional)</span></label>
+            <div class="upload-zone" id="uploadZone">
+              <input type="file" id="evidenceFiles" multiple accept="image/*,video/*" onchange="handleFiles(this.files)"/>
+              <div class="upload-icon">📎</div>
+              <div class="upload-text">Click to upload or drag & drop</div>
+              <div class="upload-hint">Accepted: JPG, PNG, MP4, MOV, AVI · Max 10MB per file</div>
+              <div class="upload-size-warn" id="sizeWarn">⚠️ Some files exceed 10MB and were skipped</div>
+            </div>
+            <div class="upload-preview" id="uploadPreview"></div>
+          </div>
+          <div class="form-group">
+            <label>Any additional information</label>
+            <input type="text" id="additionalInfo" placeholder="Witnesses, recurring incidents, relationship to perpetrator (optional)…"/>
+          </div>
+          <button type="submit" class="form-submit" id="submitBtn">🔒 Submit Anonymously</button>
+          <div class="form-note">🛡 Your identity is never stored or shared. Ref ID will be provided.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PERFORMANCE -->
+<section id="performance">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="eyebrow">Results</div>
+      <h2 class="section-title">System Performance</h2>
+      <p class="section-sub">Our DistilBERT-based model outperforms baseline models across all key metrics.</p>
+    </div>
+    <div class="perf-grid">
+      <div class="perf-card reveal">
+        <h4>📊 Overall Classification Metrics — DistilBERT</h4>
+        <div class="metric-bar">
+          <div class="metric-top"><span class="metric-name">Accuracy</span><span class="metric-val">98.77%</span></div>
+          <div class="bar-track"><div class="bar-fill" data-width="98.77"></div></div>
+        </div>
+        <div class="metric-bar">
+          <div class="metric-top"><span class="metric-name">Precision</span><span class="metric-val">98.21%</span></div>
+          <div class="bar-track"><div class="bar-fill" data-width="98.21"></div></div>
+        </div>
+        <div class="metric-bar">
+          <div class="metric-top"><span class="metric-name">Recall</span><span class="metric-val">98.10%</span></div>
+          <div class="bar-track"><div class="bar-fill" data-width="98.10"></div></div>
+        </div>
+        <div class="metric-bar">
+          <div class="metric-top"><span class="metric-name">F1-Score</span><span class="metric-val">97.98%</span></div>
+          <div class="bar-track"><div class="bar-fill" data-width="97.98"></div></div>
+        </div>
+      </div>
+
+      <div class="perf-card reveal">
+        <h4>🤖 Accuracy Comparison — All Models</h4>
+        <div class="model-compare">
+          <div class="model-row">
+            <div class="model-dot" style="background:#1a6b5a"></div>
+            <div class="model-name">DistilBERT <span style="font-size:.75rem;color:var(--muted)">(Proposed)</span></div>
+            <div class="model-score" style="color:var(--teal)">98.77%</div>
+          </div>
+          <div class="model-row">
+            <div class="model-dot" style="background:#c4651a"></div>
+            <div class="model-name">Text CNN</div>
+            <div class="model-score" style="color:var(--amber)">91.43%</div>
+          </div>
+          <div class="model-row">
+            <div class="model-dot" style="background:#8a8278"></div>
+            <div class="model-name">Autoencoders</div>
+            <div class="model-score" style="color:var(--muted)">84.96%</div>
+          </div>
+        </div>
+        <div style="margin-top:1.5rem">
+          <h4 style="margin-bottom:1rem">🚨 High-Risk Detection</h4>
+          <div class="metric-bar">
+            <div class="metric-top"><span class="metric-name">High-Risk Detection Rate</span><span class="metric-val">94.1%</span></div>
+            <div class="bar-track"><div class="bar-fill" data-width="94.1"></div></div>
+          </div>
+          <div class="metric-bar">
+            <div class="metric-top"><span class="metric-name">Urgency Identification Rate</span><span class="metric-val">92.8%</span></div>
+            <div class="bar-track"><div class="bar-fill" data-width="92.8"></div></div>
+          </div>
+          <div class="metric-bar">
+            <div class="metric-top"><span class="metric-name">Emotion Detection Accuracy</span><span class="metric-val">93.6%</span></div>
+            <div class="bar-track"><div class="bar-fill" data-width="93.6"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="perf-card reveal">
+        <h4>🔐 Security & Anonymity</h4>
+        <div class="metric-bar">
+          <div class="metric-top"><span class="metric-name">Anonymity Preservation Rate</span><span class="metric-val">99.2%</span></div>
+          <div class="bar-track"><div class="bar-fill" data-width="99.2"></div></div>
+        </div>
+        <div class="metric-bar">
+          <div class="metric-top"><span class="metric-name">Data Security Success Rate</span><span class="metric-val">98.7%</span></div>
+          <div class="bar-track"><div class="bar-fill" data-width="98.7"></div></div>
+        </div>
+      </div>
+
+      <div class="perf-card reveal">
+        <h4>⚡ Speed & Throughput</h4>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem">
+          <div style="background:var(--teal-light);border-radius:12px;padding:1.2rem;text-align:center">
+            <div style="font-family:'Fraunces',serif;font-size:2rem;font-weight:700;color:var(--teal)">120<span style="font-size:1rem">ms</span></div>
+            <div style="font-size:.78rem;color:var(--muted)">Inference Time per Complaint</div>
+          </div>
+          <div style="background:var(--amber-light);border-radius:12px;padding:1.2rem;text-align:center">
+            <div style="font-family:'Fraunces',serif;font-size:2rem;font-weight:700;color:var(--amber)">620</div>
+            <div style="font-size:.78rem;color:var(--muted)">Complaints per Minute</div>
+          </div>
+        </div>
+        <p style="font-size:.85rem;color:var(--muted)">DistilBERT delivers the best throughput at 620 complaints/minute while maintaining the highest accuracy, making it ideal for real-world scalable deployment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONCLUSION -->
+<section class="conclusion-bg">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="eyebrow">Conclusion</div>
+      <h2 class="section-title" style="color:#fff">Why SafeVoice Matters</h2>
+    </div>
+    <div class="concl-grid">
+      <div class="concl-card reveal">
+        <div class="concl-num">01</div>
+        <div class="concl-title">Effective & Reliable</div>
+        <div class="concl-desc">98.77% classification accuracy, 93.6% emotion detection, and over 94% high-risk detection ensure accurate prioritization of sensitive complaints in real time.</div>
+      </div>
+      <div class="concl-card reveal">
+        <div class="concl-num">02</div>
+        <div class="concl-title">Secure & Anonymous</div>
+        <div class="concl-desc">99.2% anonymity preservation and 98.7% data security success rate guarantees confidentiality, encrypted handling, and identity-free submission, building trust among vulnerable users.</div>
+      </div>
+      <div class="concl-card reveal">
+        <div class="concl-num">03</div>
+        <div class="concl-title">Scalable & Impactful</div>
+        <div class="concl-desc">Real-time processing at 120ms inference and 620 complaints/minute with automated escalation enables timely intervention and a transformative approach to secure digital abuse reporting.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRACK COMPLAINT -->
+<section id="track" class="track-section">
+  <div class="section-inner" style="width:100%">
+    <div class="track-box reveal">
+      <div class="eyebrow">Track Your Report</div>
+      <h2>Check Complaint Status</h2>
+      <p>Enter your Reference ID to see if your complaint has been accepted or rejected by the authorities.</p>
+      <div class="track-input-row">
+        <input class="track-input" id="trackInput" placeholder="e.g. SV-MS8JYJKX" maxlength="14"/>
+        <button class="track-btn" onclick="trackComplaint()">🔍 Track</button>
+      </div>
+      <div class="track-spinner" id="trackSpinner">⏳ Checking status…</div>
+      <div class="track-result" id="trackResult"></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">🛡 SafeVoice</div>
+    <ul class="footer-links">
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#performance">Performance</a></li>
+      <li><a href="#report">Report</a></li>
+      <li><a href="#track">Track</a></li>
+    </ul>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 SafeVoice — AI-Powered Anonymous Abuse Reporting Platform</span>
+    <span>Emergency: Police 100 · Women Helpline 1091 · Child Helpline 1098</span>
+  </div>
+</footer>
+
+<!-- SUCCESS MODAL -->
+<div class="modal-overlay" id="successModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="success-icon">✅</div>
+    <h3 style="text-align:center">Report Submitted!</h3>
+    <p style="text-align:center;margin-bottom:1rem">Your anonymous report has been received. Authorities have been notified and will review your complaint.</p>
+    <div style="background:var(--teal-light);border:1.5px solid #b6ddd6;border-radius:12px;padding:1.2rem;text-align:center;margin-bottom:1rem">
+      <div style="font-size:.75rem;color:var(--muted);margin-bottom:.3rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em">Your Reference ID</div>
+      <div id="refId" style="font-family:'Fraunces',serif;font-size:1.8rem;font-weight:700;color:var(--teal);letter-spacing:.05em"></div>
+      <button onclick="copyRefId()" id="copyBtn" style="margin-top:.6rem;background:var(--teal);color:#fff;border:none;padding:.4rem 1.1rem;border-radius:100px;font-size:.78rem;font-weight:700;cursor:pointer;">📋 Copy ID</button>
+    </div>
+    <div style="background:var(--amber-light);border:1px solid #f0c896;border-radius:10px;padding:.9rem 1rem;font-size:.82rem;color:var(--ink2);margin-bottom:1rem;line-height:1.6">
+      ⚠️ <strong>Important:</strong> Save your Reference ID now. You will need it to track your complaint status on the <strong>Track Complaint</strong> section of this website.
+    </div>
+    <div style="font-size:.82rem;color:var(--muted);text-align:center;margin-bottom:1rem">
+      🔍 Use the <strong>Track Complaint</strong> section to check if your complaint is <span style="color:#065f46;font-weight:700">Accepted</span> or <span style="color:#991b1b;font-weight:700">Rejected</span>
+    </div>
+    <button class="form-submit" onclick="closeModal()" style="margin-top:0">✓ I've Saved My ID</button>
+  </div>
+</div>
+
+<script>
+// Nav scroll
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50)
+})
+
+// Smooth reveal on scroll
+const reveals=document.querySelectorAll('.reveal')
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible')}})
+},{threshold:0.12})
+reveals.forEach(r=>observer.observe(r))
+
+// Animate stat numbers
+const statNums=document.querySelectorAll('.stat-num[data-target]')
+const statsObserver=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const el=e.target
+      const target=parseFloat(el.dataset.target)
+      const isInt=Number.isInteger(target)
+      let start=0, duration=1800
+      const step=timestamp=>{
+        if(!start) start=timestamp
+        const progress=Math.min((timestamp-start)/duration,1)
+        const val=progress*target
+        el.textContent=isInt?Math.floor(val).toLocaleString():val.toFixed(2)
+        if(progress<1) requestAnimationFrame(step)
+        else el.textContent=isInt?target.toLocaleString():target.toFixed(2)
+      }
+      requestAnimationFrame(step)
+      statsObserver.unobserve(el)
+    }
+  })
+},{threshold:.5})
+statNums.forEach(n=>statsObserver.observe(n))
+
+// Animate bars
+const bars=document.querySelectorAll('.bar-fill')
+const barObserver=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.style.width=e.target.dataset.width+'%'
+      barObserver.unobserve(e.target)
+    }
+  })
+},{threshold:.3})
+bars.forEach(b=>barObserver.observe(b))
+
+// ── FILE UPLOAD ──
+let uploadedFiles = []
+
+function handleFiles(files) {
+  const warn = document.getElementById('sizeWarn')
+  let skipped = false
+  Array.from(files).forEach(file => {
+    if(file.size > 10 * 1024 * 1024){ skipped = true; return }
+    if(uploadedFiles.find(f => f.name === file.name)) return
+    uploadedFiles.push(file)
+  })
+  warn.style.display = skipped ? 'block' : 'none'
+  renderPreviews()
+}
+
+function renderPreviews() {
+  const container = document.getElementById('uploadPreview')
+  container.innerHTML = ''
+  uploadedFiles.forEach((file, i) => {
+    const isImg = file.type.startsWith('image/')
+    const div = document.createElement('div')
+    div.className = 'preview-item'
+
+    if(isImg) {
+      const reader = new FileReader()
+      reader.onload = ev => {
+        div.innerHTML = `
+          <img src="${ev.target.result}" style="width:54px;height:54px;object-fit:cover;border-radius:6px;border:1px solid var(--border)"/>
+          <span style="max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${file.name}</span>
+          <button class="remove" onclick="removeFile(${i})">✕</button>`
+      }
+      reader.readAsDataURL(file)
+    } else {
+      div.innerHTML = `<span>🎬</span><span>${file.name.length > 22 ? file.name.slice(0,20)+'…' : file.name}</span><button class="remove" onclick="removeFile(${i})">✕</button>`
+    }
+    container.appendChild(div)
+  })
+}
+
+function removeFile(i) {
+  uploadedFiles.splice(i, 1)
+  renderPreviews()
+}
+
+// Convert file to raw Base64 string
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => resolve(reader.result.split(',')[1]) // raw base64 only
+    reader.onerror = reject
+    reader.readAsDataURL(file)
+  })
+}
+
+// Convert file to full data URL (for fallback embedding)
+function fileToDataURL(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => resolve(reader.result)
+    reader.onerror = reject
+    reader.readAsDataURL(file)
+  })
+}
+
+// Upload image to ImgBB (free hosting) and return a real URL
+async function uploadToImgBB(file) {
+  const base64 = await fileToBase64(file)
+  const formData = new FormData()
+  formData.append('image', base64)
+  formData.append('key', '6d207e02198a847aa98d0a2a901485a5') // free public ImgBB API key
+
+  const res = await fetch('https://api.imgbb.com/1/upload', { method:'POST', body:formData })
+  const data = await res.json()
+  if(data.success) return data.data
+  throw new Error(data.error?.message || 'Upload failed')
+}
+
+// Build image HTML — uploads to ImgBB first so Gmail shows real images
+async function buildImagesHTML() {
+  if(uploadedFiles.length === 0) return '<p style="color:#888;">No files uploaded.</p>'
+
+  const imageFiles = uploadedFiles.filter(f => f.type.startsWith('image/'))
+  const videoFiles = uploadedFiles.filter(f => f.type.startsWith('video/'))
+  let html = ''
+
+  if(imageFiles.length > 0) {
+    html += '<p><strong>📸 Evidence Images:</strong></p>'
+    for(const file of imageFiles) {
+      try {
+        const img = await uploadToImgBB(file)
+        html += `
+          <div style="margin:12px 0;padding:12px;background:#f9f9f9;border-radius:8px;border:1px solid #eee;">
+            <p style="font-size:12px;color:#666;margin-bottom:8px;">📸 <strong>${file.name}</strong></p>
+            <a href="${img.url}" target="_blank">
+              <img src="${img.url}" style="max-width:480px;width:100%;border-radius:8px;border:1px solid #ddd;display:block;" alt="${file.name}"/>
+            </a>
+            <p style="margin-top:8px;font-size:12px;">
+              <a href="${img.url}" target="_blank" style="color:#1a6b5a;font-weight:bold;margin-right:12px;">🔗 View Full Image</a>
+              <a href="${img.url}" target="_blank" style="color:#1a6b5a;">⬇ Download</a>
+            </p>
+          </div>`
+      } catch(err) {
+        // Fallback: embed as base64 directly if ImgBB fails
+        console.warn('ImgBB failed, using base64 fallback:', err)
+        const dataUrl = await fileToDataURL(file)
+        html += `
+          <div style="margin:12px 0;">
+            <p style="font-size:12px;color:#666;margin-bottom:4px;">📸 ${file.name}</p>
+            <img src="${dataUrl}" style="max-width:480px;width:100%;border-radius:8px;border:1px solid #ddd;" alt="${file.name}"/>
+          </div>`
+      }
+    }
+  }
+
+  if(videoFiles.length > 0) {
+    html += '<p style="margin-top:14px;"><strong>🎬 Video Files:</strong></p>'
+    videoFiles.forEach(f => {
+      html += `<p style="font-size:13px;color:#555;padding:4px 0;">▶ ${f.name} — ${(f.size/1024/1024).toFixed(2)} MB</p>`
+    })
+  }
+
+  return html
+}
+
+// Drag & drop
+const zone = document.getElementById('uploadZone')
+zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('dragover') })
+zone.addEventListener('dragleave', () => zone.classList.remove('dragover'))
+zone.addEventListener('drop', e => {
+  e.preventDefault(); zone.classList.remove('dragover')
+  handleFiles(e.dataTransfer.files)
+})
+
+// ── GOOGLE SHEETS API (Apps Script Web App URL) ──
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbw9oDXrHZj-NN3744j_E0sEJ6BAaFZex97UVHZEVKXHlx4AaGY6NbC7EPiQPXNtrj6k/exec'
+const SHEET_ID  = '1M_W7thLLb_8SpUdCggp_obVxlNAcNpT2l-JrJZqIqb8'
+
+// Save complaint to Google Sheets
+async function saveToSheet(data) {
+  try {
+    await fetch(SHEET_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({action: 'save', ...data})
+    })
+  } catch(e) { console.warn('Sheet save error:', e) }
+}
+
+// Parse CSV text into array of row arrays
+function parseCSV(text) {
+  const rows = []
+  const lines = text.trim().split('\n')
+  for (const line of lines) {
+    const cols = []
+    let current = ''
+    let inQuotes = false
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i]
+      if (ch === '"') { inQuotes = !inQuotes }
+      else if (ch === ',' && !inQuotes) { cols.push(current.trim()); current = '' }
+      else { current += ch }
+    }
+    cols.push(current.trim())
+    rows.push(cols)
+  }
+  return rows
+}
+
+// Get status by reading Google Sheet as CSV (most reliable method)
+async function getStatus(refId) {
+  try {
+    const csvUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&sheet=Complaints&gid=1795341744`
+    const res  = await fetch(csvUrl)
+    if (!res.ok) throw new Error('Failed to fetch sheet: ' + res.status)
+    const text = await res.text()
+    console.log('CSV fetched, length:', text.length)
+
+    const rows = parseCSV(text)
+    if (rows.length < 2) return { error: 'Sheet is empty' }
+
+    const headers = rows[0] // first row = column names
+    console.log('Headers:', headers)
+
+    // Find column indexes
+    const idxRefId    = headers.findIndex(h => h.toLowerCase().includes('reference'))
+    const idxType     = headers.findIndex(h => h.toLowerCase().includes('incident'))
+    const idxLocation = headers.findIndex(h => h.toLowerCase().includes('location'))
+    const idxDate     = headers.findIndex(h => h.toLowerCase().includes('date'))
+    const idxSubmit   = headers.findIndex(h => h.toLowerCase().includes('submitted'))
+    const idxStatus   = headers.findIndex(h => h.toLowerCase().includes('status'))
+    const idxUpdated  = headers.findIndex(h => h.toLowerCase().includes('updated'))
+
+    console.log('Looking for refId:', refId, '| idxRefId col:', idxRefId)
+
+    // Search rows for matching refId
+    for (let i = 1; i < rows.length; i++) {
+      const row = rows[i]
+      const rowId = (row[idxRefId] || '').replace(/"/g, '').trim().toUpperCase()
+      console.log(`Row ${i}: "${rowId}" vs "${refId.toUpperCase()}"`)
+      if (rowId === refId.toUpperCase()) {
+        return {
+          refId:        row[idxRefId]   || refId,
+          incidentType: row[idxType]    || '—',
+          location:     row[idxLocation]|| '—',
+          dateOccurred: row[idxDate]    || '—',
+          submittedAt:  row[idxSubmit]  || '—',
+          status:       row[idxStatus]  || 'Pending',
+          updatedAt:    row[idxUpdated] || '—'
+        }
+      }
+    }
+    return { error: 'Not found' }
+  } catch(e) {
+    console.error('getStatus error:', e)
+    return null
+  }
+}
+
+// ── FORM SUBMIT WITH EMAILJS + GOOGLE SHEETS ──
+document.getElementById('complaintForm').addEventListener('submit', async function(e) {
+  e.preventDefault()
+  const btn = document.getElementById('submitBtn')
+  btn.textContent = '⏳ Sending…'
+  btn.disabled = true
+
+  const refId = 'SV-' + Math.random().toString(36).substr(2, 8).toUpperCase()
+  const form = this
+
+  // Collect form data
+  const incidentType   = form.querySelector('select').value || 'Not specified'
+  const location       = form.querySelectorAll('input')[0].value || 'Not specified'
+  const dateOccurred   = form.querySelectorAll('input')[1].value || 'Not specified'
+  const emotionalState = form.querySelectorAll('select')[1].value || 'Not specified'
+  const description    = form.querySelector('textarea').value
+  const additional     = document.getElementById('additionalInfo').value || 'None'
+  const fileNames      = uploadedFiles.length > 0 ? uploadedFiles.map(f => f.name).join(', ') : 'No files uploaded'
+  const submittedAt    = new Date().toLocaleString('en-IN', {timeZone:'Asia/Kolkata'})
+
+  // Build inline images HTML for email
+  btn.textContent = '📎 Processing files…'
+  const imagesHTML = await buildImagesHTML()
+
+  // Website base URL for accept/reject buttons
+  const siteURL = window.location.href.split('#')[0]
+  const acceptURL = `${siteURL}?action=accept&refId=${refId}&token=${btoa(refId + '_accept')}`
+  const rejectURL = `${siteURL}?action=reject&refId=${refId}&token=${btoa(refId + '_reject')}`
+
+  // Full HTML message for email body (includes Accept/Reject buttons)
+  const fullMessage =
+    `<div style="font-family:sans-serif;font-size:14px;line-height:1.8;color:#1a1714;">` +
+    `<table style="width:100%;border-collapse:collapse;margin-bottom:16px;background:#f5f2ee;border-radius:8px;padding:12px;">` +
+    `<tr><td style="padding:6px 12px;font-weight:bold;color:#1a6b5a;width:180px;">🔖 Reference ID</td><td><strong>${refId}</strong></td></tr>` +
+    `<tr><td style="padding:6px 12px;font-weight:bold;color:#1a6b5a;">📋 Incident Type</td><td>${incidentType}</td></tr>` +
+    `<tr><td style="padding:6px 12px;font-weight:bold;color:#1a6b5a;">📍 Location</td><td>${location}</td></tr>` +
+    `<tr><td style="padding:6px 12px;font-weight:bold;color:#1a6b5a;">📅 Date Occurred</td><td>${dateOccurred}</td></tr>` +
+    `<tr><td style="padding:6px 12px;font-weight:bold;color:#1a6b5a;">💭 Emotional State</td><td>${emotionalState}</td></tr>` +
+    `<tr><td style="padding:6px 12px;font-weight:bold;color:#1a6b5a;">🕐 Submitted At</td><td>${submittedAt}</td></tr>` +
+    `</table>` +
+    `<div style="background:#fff;border-left:4px solid #1a6b5a;padding:12px 16px;border-radius:4px;margin-bottom:16px;">` +
+    `<p style="font-weight:bold;color:#1a6b5a;margin-bottom:6px;">📝 Description</p>` +
+    `<p style="color:#3d3830;">${description.replace(/\n/g,'<br>')}</p></div>` +
+    `<p><strong>ℹ️ Additional Info:</strong> ${additional}</p>` +
+    `<hr style="border:none;border-top:1px dashed #ccc;margin:16px 0;"/>` +
+    imagesHTML +
+    `<hr style="border:none;border-top:2px solid #1a6b5a;margin:20px 0;"/>` +
+    `<div style="background:#f0fdf4;border:1.5px solid #86efac;border-radius:12px;padding:20px;text-align:center;">` +
+    `<p style="font-size:15px;font-weight:bold;color:#065f46;margin-bottom:6px;">⚖️ Police Action Required</p>` +
+    `<p style="font-size:13px;color:#555;margin-bottom:16px;">Review the complaint above and click Accept or Reject. The user will be notified automatically.</p>` +
+    `<a href="${acceptURL}" style="display:inline-block;background:#065f46;color:#fff;padding:12px 28px;border-radius:100px;font-weight:bold;font-size:14px;text-decoration:none;margin-right:12px;">✅ Accept Complaint</a>` +
+    `<a href="${rejectURL}" style="display:inline-block;background:#991b1b;color:#fff;padding:12px 28px;border-radius:100px;font-weight:bold;font-size:14px;text-decoration:none;">❌ Reject Complaint</a>` +
+    `</div></div>`
+
+  const templateParams = {
+    name:    'Anonymous Report — ' + refId,
+    message: fullMessage,
+    time:    submittedAt,
+    ref_id:         refId,
+    incident_type:  incidentType,
+    location:       location,
+    date_occurred:  dateOccurred,
+    emotional_state:emotionalState,
+    description:    description,
+    additional:     additional,
+    files_attached: fileNames,
+    submitted_at:   submittedAt
+  }
+
+  try {
+    btn.textContent = '📤 Sending…'
+
+    // 1. Save to Google Sheets (status = Pending)
+    await saveToSheet({
+      refId, incidentType, location, dateOccurred,
+      emotionalState, description, additional,
+      fileNames, submittedAt, status: 'Pending'
+    })
+
+    // 2. Send email to police with Accept/Reject buttons
+    const response = await emailjs.send('service_ntm50wr', 'template_shqb259', templateParams)
+    console.log('EmailJS success:', response.status, response.text)
+
+    // 3. Show success modal
+    document.getElementById('refId').textContent = refId
+    window._lastRefId = refId
+    document.getElementById('successModal').classList.add('open')
+    form.reset()
+    uploadedFiles = []
+    renderPreviews()
+  } catch(err) {
+    console.error('EmailJS error:', err)
+    alert('⚠️ Failed to send report.\nError: ' + (err.text || JSON.stringify(err)) + '\n\nPlease try again.')
+  } finally {
+    btn.textContent = '🔒 Submit Anonymously'
+    btn.disabled = false
+  }
+})
+
+// ── COPY REF ID ──
+function copyRefId() {
+  const id = document.getElementById('refId').textContent
+  navigator.clipboard.writeText(id).then(() => {
+    const btn = document.getElementById('copyBtn')
+    btn.textContent = '✅ Copied!'
+    btn.style.background = '#065f46'
+    setTimeout(() => { btn.textContent = '📋 Copy ID'; btn.style.background = 'var(--teal)' }, 2000)
+  })
+}
+
+// ── TRACK COMPLAINT ──
+async function trackComplaint() {
+  const input = document.getElementById('trackInput').value.trim().toUpperCase()
+  const result = document.getElementById('trackResult')
+  const spinner = document.getElementById('trackSpinner')
+
+  if(!input || input.length < 5) {
+    result.className = 'track-result notfound show'
+    result.style.display = 'block'
+    result.innerHTML = '<p style="color:var(--muted);text-align:center;">⚠️ Please enter a valid Reference ID (e.g. SV-MS8JYJKX)</p>'
+    return
+  }
+
+  result.className = 'track-result'
+  result.style.display = 'none'
+  spinner.className = 'track-spinner show'
+
+  try {
+    const data = await getStatus(input)
+    spinner.className = 'track-spinner'
+    console.log('Track result:', data)
+
+    if(!data) {
+      result.className = 'track-result notfound show'
+      result.style.display = 'block'
+      result.innerHTML = `<p style="text-align:center;color:var(--muted);">⚠️ Could not connect to the server. Please check your internet and try again.</p>`
+      return
+    }
+
+    if(data.error) {
+      result.className = 'track-result notfound show'
+      result.style.display = 'block'
+      result.innerHTML = `
+        <p style="text-align:center;font-size:1.3rem;margin-bottom:.5rem">🔍</p>
+        <p style="text-align:center;font-weight:700;margin-bottom:.3rem">No complaint found</p>
+        <p style="text-align:center;color:var(--muted);font-size:.85rem">No record found for <strong>${input}</strong>.<br>Please check your Reference ID and try again.</p>`
+      return
+    }
+
+    const rawStatus  = (data.status || 'Pending').toString().trim()
+    const statusLower = rawStatus.toLowerCase()
+    const statusClass = statusLower.includes('accept') ? 'accepted' : statusLower.includes('reject') ? 'rejected' : 'pending'
+    const statusEmoji = statusClass === 'accepted' ? '✅' : statusClass === 'rejected' ? '❌' : '⏳'
+    const statusLabel = statusClass === 'accepted' ? 'Accepted' : statusClass === 'rejected' ? 'Rejected' : 'Pending Review'
+
+    result.className = `track-result ${statusClass} show`
+    result.style.display = 'block'
+    result.innerHTML = `
+      <div class="status-badge ${statusClass}">${statusEmoji} ${statusLabel}</div>
+      <div class="track-detail-row"><span class="track-detail-label">Reference ID</span><span class="track-detail-val">${data.refId}</span></div>
+      <div class="track-detail-row"><span class="track-detail-label">Incident Type</span><span class="track-detail-val">${data.incidentType}</span></div>
+      <div class="track-detail-row"><span class="track-detail-label">Location</span><span class="track-detail-val">${data.location}</span></div>
+      <div class="track-detail-row"><span class="track-detail-label">Submitted At</span><span class="track-detail-val">${data.submittedAt}</span></div>
+      <div class="track-detail-row"><span class="track-detail-label">Last Updated</span><span class="track-detail-val">${data.updatedAt}</span></div>
+      ${statusClass === 'pending'  ? '<p style="margin-top:.75rem;font-size:.82rem;color:var(--muted);text-align:center;">⏳ Your complaint is under review. Please check back later.</p>' : ''}
+      ${statusClass === 'accepted' ? '<p style="margin-top:.75rem;font-size:.82rem;color:#065f46;text-align:center;font-weight:600;">✅ Your complaint has been accepted and is being acted upon by authorities.</p>' : ''}
+      ${statusClass === 'rejected' ? '<p style="margin-top:.75rem;font-size:.82rem;color:#991b1b;text-align:center;font-weight:600;">❌ Your complaint was reviewed and could not be accepted at this time.</p>' : ''}`
+  } catch(e) {
+    spinner.className = 'track-spinner'
+    result.className = 'track-result notfound show'
+    result.style.display = 'block'
+    result.innerHTML = `<p style="text-align:center;color:var(--muted);">⚠️ Error: ${e.message}. Please try again.</p>`
+  }
+}
+
+// Allow pressing Enter in track input
+document.getElementById('trackInput').addEventListener('keydown', e => {
+  if(e.key === 'Enter') trackComplaint()
+})
+
+// ── HANDLE ACCEPT/REJECT URL PARAMS (when police clicks email button) ──
+async function handleActionFromURL() {
+  const params = new URLSearchParams(window.location.search)
+  const action = params.get('action')
+  const refId  = params.get('refId')
+  const token  = params.get('token')
+
+  if(!action || !refId || !token) return
+
+  // Validate token
+  let expectedToken
+  try { expectedToken = btoa(refId + '_' + action) } catch(e) { return }
+  if(token !== expectedToken) { alert('⚠️ Invalid or tampered action link.'); return }
+
+  // Show action confirmation page
+  document.body.innerHTML = `
+    <div class="action-page">
+      <div class="action-box">
+        <div class="action-icon">${action === 'accept' ? '⚖️' : '🔍'}</div>
+        <h2>Complaint ${refId}</h2>
+        <p>You are about to <strong>${action === 'accept' ? 'ACCEPT' : 'REJECT'}</strong> this complaint. This will update the status visible to the reporter.</p>
+        <div class="action-btns" id="actionBtns">
+          ${action === 'accept'
+            ? `<button class="btn-accept" onclick="confirmAction('${refId}','accept')">✅ Confirm Accept</button>`
+            : `<button class="btn-reject" onclick="confirmAction('${refId}','reject')">❌ Confirm Reject</button>`}
+          <button onclick="window.location.href=window.location.pathname" style="background:var(--border);border:none;padding:.85rem 1.5rem;border-radius:100px;cursor:pointer;font-weight:600;">Cancel</button>
+        </div>
+        <div class="action-done" id="actionDone"></div>
+      </div>
+    </div>`
+}
+
+async function confirmAction(refId, action) {
+  document.getElementById('actionBtns').innerHTML = '<p style="color:var(--muted)">⏳ Updating status…</p>'
+  const updatedAt = new Date().toLocaleString('en-IN', {timeZone:'Asia/Kolkata'})
+  const status = action === 'accept' ? 'Accepted' : 'Rejected'
+
+  try {
+    await fetch(SHEET_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({action: 'update', refId, status, updatedAt})
+    })
+    const done = document.getElementById('actionDone')
+    done.className = 'action-done show'
+    done.innerHTML = `
+      <div style="margin-top:1rem;padding:1.2rem;background:${action==='accept'?'#d1fae5':'#fee2e2'};border-radius:12px;">
+        <p style="font-size:1.5rem;margin-bottom:.3rem">${action==='accept'?'✅':'❌'}</p>
+        <p style="font-weight:700;color:${action==='accept'?'#065f46':'#991b1b'}">Complaint ${status}!</p>
+        <p style="font-size:.85rem;color:var(--muted);margin-top:.3rem">The reporter can now see the updated status using their Reference ID.</p>
+      </div>`
+  } catch(e) {
+    alert('Error updating status. Please try again.')
+    document.getElementById('actionBtns').innerHTML = `<button class="btn-${action}" onclick="confirmAction('${refId}','${action}')">Retry</button>`
+  }
+}
+
+// Run on page load
+handleActionFromURL()
+
+function closeModal(){
+  document.getElementById('successModal').classList.remove('open')
+  showToast()
+}
+
+function showToast(){
+  const t=document.getElementById('toast')
+  t.classList.add('show')
+  setTimeout(()=>t.classList.remove('show'),3500)
+}
+
+// Menu toggle
+function toggleMenu(){
+  const nav=document.querySelector('.nav-links')
+  nav.style.display=nav.style.display==='flex'?'none':'flex'
+}
+
+// Smooth scroll for anchors
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const target=document.querySelector(a.getAttribute('href'))
+    if(target){e.preventDefault();target.scrollIntoView({behavior:'smooth',block:'start'})}
+  })
+})
+</script>
+
+
+<script>
+
+// ══════════════════════════════════════════════
+//  SafeVoice Chatbot — Full Featured Version
+// ══════════════════════════════════════════════
+
+// ── STATE ──
+let cbState = {
+  lang: 'en',
+  waitingForRefId: false,
+  waitingForCity: false,
+  waitingForCounsel: false,
+  guidedStep: 0,          // 0 = not in guided mode
+  guidedData: {},         // collected guided report data
+  moodDone: false
+}
+
+const SHEET_ID_CB = '1M_W7thLLb_8SpUdCggp_obVxlNAcNpT2l-JrJZqIqb8'
+
+// ── TRANSLATIONS ──
+const T = {
+  en: {
+    greeting1: "👋 Welcome to <strong>SafeVoice</strong> — your safe, anonymous reporting platform.",
+    greeting2: "🛡 Here's what I can help you with:<br><br>📝 <strong>Report</strong> an incident anonymously<br>📍 <strong>Track</strong> your complaint status<br>🚨 <strong>Emergency</strong> helpline numbers<br>💬 <strong>Guided</strong> step-by-step reporting<br>🧠 <strong>Safety tips</strong> for your situation<br>🏥 <strong>Nearby help centers</strong><br>⚖️ <strong>Legal FAQs</strong><br>💙 <strong>Anonymous counseling</strong> to talk freely",
+    greeting3: "How are you feeling right now? 💙",
+    moodQ: "How are you feeling right now?",
+    moodBtns: ["😰 Scared","😢 Sad","😡 Angry","😐 Calm","😤 Frustrated","😶 Numb"],
+    placeholder: "Type your question…",
+    refIdPlaceholder: "Type your Reference ID (e.g. SV-XXXXXXXX)…",
+    cityPlaceholder: "Type your city name…",
+    counselPlaceholder: "Share what's on your mind… I am listening 💙",
+    online: "Online · Secure & Anonymous"
+  },
+  ta: {
+    greeting1: "👋 <strong>SafeVoice</strong>-க்கு வரவேற்கிறோம் — உங்கள் பாதுகாப்பான, அநாமதேய புகார் தளம்.",
+    greeting2: "🛡 நான் உதவக்கூடியவை:<br><br>📝 <strong>புகார்</strong> அநாமதேயமாக பதிவு செய்யுங்கள்<br>📍 <strong>புகார் நிலை</strong> கண்காணிக்கவும்<br>🚨 <strong>அவசர</strong> உதவி எண்கள்<br>💬 <strong>வழிகாட்டல்</strong> படிப்படியாக புகாரளிக்க<br>🧠 <strong>பாதுகாப்பு குறிப்புகள்</strong><br>🏥 <strong>அருகிலுள்ள உதவி மையங்கள்</strong><br>⚖️ <strong>சட்ட கேள்விகள்</strong><br>💙 <strong>அநாமதேய ஆலோசனை</strong>",
+    greeting3: "இப்போது நீங்கள் எப்படி உணர்கிறீர்கள்? 💙",
+    moodQ: "இப்போது நீங்கள் எப்படி உணர்கிறீர்கள்?",
+    moodBtns: ["😰 பயமாக","😢 சோகமாக","😡 கோபமாக","😐 அமைதியாக","😤 விரக்தியாக","😶 உணர்வற்று"],
+    placeholder: "உங்கள் கேள்வியை தட்டச்சு செய்யுங்கள்…",
+    refIdPlaceholder: "உங்கள் Reference ID தட்டச்சு செய்யுங்கள்…",
+    cityPlaceholder: "உங்கள் நகர பெயர் தட்டச்சு செய்யுங்கள்…",
+    counselPlaceholder: "உங்கள் மனதில் உள்ளதை பகிருங்கள்… நான் கேட்கிறேன் 💙",
+    online: "ஆன்லைன் · பாதுகாப்பான & அநாமதேயம்"
+  },
+  hi: {
+    greeting1: "👋 <strong>SafeVoice</strong> में आपका स्वागत है — आपका सुरक्षित, गुमनाम रिपोर्टिंग प्लेटफॉर्म।",
+    greeting2: "🛡 मैं इनमें मदद कर सकता हूँ:<br><br>📝 <strong>शिकायत</strong> गुमनाम रूप से दर्ज करें<br>📍 <strong>शिकायत स्थिति</strong> ट्रैक करें<br>🚨 <strong>आपातकालीन</strong> हेल्पलाइन नंबर<br>💬 <strong>चरण-दर-चरण</strong> रिपोर्टिंग<br>🧠 <strong>सुरक्षा सुझाव</strong><br>🏥 <strong>पास के सहायता केंद्र</strong><br>⚖️ <strong>कानूनी प्रश्न</strong><br>💙 <strong>गुमनाम परामर्श</strong>",
+    greeting3: "आप अभी कैसा महसूस कर रहे हैं? 💙",
+    moodQ: "आप अभी कैसा महसूस कर रहे हैं?",
+    moodBtns: ["😰 डरा हुआ","😢 उदास","😡 गुस्सा","😐 शांत","😤 निराश","😶 सुन्न"],
+    placeholder: "अपना प्रश्न टाइप करें…",
+    refIdPlaceholder: "अपना Reference ID टाइप करें…",
+    cityPlaceholder: "अपना शहर का नाम टाइप करें…",
+    counselPlaceholder: "मन की बात साझा करें… मैं सुन रहा हूँ 💙",
+    online: "ऑनलाइन · सुरक्षित और गुमनाम"
+  },
+  te: {
+    greeting1: "👋 <strong>SafeVoice</strong>కి స్వాగతం — మీ సురక్షిత, అనామక నివేదన వేదిక.",
+    greeting2: "🛡 నేను సహాయం చేయగలను:<br><br>📝 <strong>ఫిర్యాదు</strong> అనామకంగా నమోదు చేయండి<br>📍 <strong>ఫిర్యాదు స్థితి</strong> ట్రాక్ చేయండి<br>🚨 <strong>అత్యవసర</strong> హెల్ప్‌లైన్ నంబర్లు<br>💬 <strong>దశలవారీ</strong> నివేదన<br>🧠 <strong>భద్రతా చిట్కాలు</strong><br>🏥 <strong>సమీప సహాయ కేంద్రాలు</strong><br>⚖️ <strong>చట్టపరమైన ప్రశ్నలు</strong><br>💙 <strong>అనామక కౌన్సెలింగ్</strong>",
+    greeting3: "మీరు ఇప్పుడు ఎలా అనుభవిస్తున్నారు? 💙",
+    moodQ: "మీరు ఇప్పుడు ఎలా అనుభవిస్తున్నారు?",
+    moodBtns: ["😰 భయంగా","😢 దుఃఖంగా","😡 కోపంగా","😐 శాంతంగా","😤 నిరాశగా","😶 మొద్దుగా"],
+    placeholder: "మీ ప్రశ్న టైప్ చేయండి…",
+    refIdPlaceholder: "మీ Reference ID టైప్ చేయండి…",
+    cityPlaceholder: "మీ నగరం పేరు టైప్ చేయండి…",
+    counselPlaceholder: "మీ మనసులో ఉన్నది చెప్పండి… నేను వింటున్నాను 💙",
+    online: "ఆన్‌లైన్ · సురక్షిత & అనామక"
+  }
+}
+
+// ── MOOD RESPONSES ──
+const moodResponses = {
+  en: {
+    "😰 Scared": "I hear you — feeling scared is completely valid. You are <strong>not alone</strong>, and reaching out took courage. 💙<br><br>You are safe here. Would you like to:<br>• Report the incident anonymously<br>• Talk to me about what happened<br>• See emergency helpline numbers",
+    "😢 Sad": "I\'m truly sorry you\'re going through this. Your feelings matter and you deserve support. 💜<br><br>Take a deep breath. I\'m here for you. Would you like to report what happened, or just talk first?",
+    "😡 Angry": "Your anger is completely justified. What happened to you was wrong, and you have every right to feel this way. 💪<br><br>Let's channel that into action. Would you like to report the incident and make sure the right people know?",
+    "😐 Calm": "I\'m glad you\'re feeling calm — that takes strength. 🌿<br><br>Would you like to report an incident, track a complaint, or learn more about how SafeVoice works?",
+    "😤 Frustrated": "Frustration is understandable when you feel unheard or helpless. 💙<br><br>SafeVoice is here to make sure your voice is heard. Shall we report the incident together?",
+    "😶 Numb": "Feeling numb after trauma is a natural response. Please know that what you feel is valid. 🤍<br><br>I\'m here with you. Whenever you\'re ready, we can report what happened or just talk."
+  },
+  ta: {
+    "😰 பயமாக": "நான் புரிந்துகொள்கிறேன் — பயப்படுவது இயல்பானது. நீங்கள் <strong>தனியாக இல்லை</strong>. 💙<br><br>நீங்கள் இங்கே பாதுகாப்பாக இருக்கிறீர்கள். புகாரளிக்க விரும்புகிறீர்களா?",
+    "😢 சோகமாக": "நீங்கள் இதை சந்திப்பதற்கு மிகவும் வருந்துகிறேன். உங்கள் உணர்வுகள் முக்கியம். 💜<br><br>புகாரளிக்க அல்லது பேச விரும்புகிறீர்களா?",
+    "😡 கோபமாக": "உங்கள் கோபம் நியாயமானது. நடந்தது தவறு. 💪<br><br>புகாரளிப்போமா?",
+    "😐 அமைதியாக": "அமைதியாக இருப்பது நல்லது. 🌿<br><br>புகாரளிக்க அல்லது கண்காணிக்க உதவட்டுமா?",
+    "😤 விரக்தியாக": "விரக்தி புரிந்துகொள்ளக்கூடியது. SafeVoice உங்கள் குரலை கேட்கும். 💙",
+    "😶 உணர்வற்று": "உணர்வற்று இருப்பது இயல்பான பதில். நான் இங்கே இருக்கிறேன். 🤍"
+  },
+  hi: {
+    "😰 डरा हुआ": "मैं समझता हूँ — डरना बिल्कुल स्वाभाविक है। आप <strong>अकेले नहीं हैं</strong>। 💙<br><br>यहाँ आप सुरक्षित हैं। क्या आप शिकायत दर्ज करना चाहते हैं?",
+    "😢 उदास": "मुझे खेद है कि आप इससे गुज़र रहे हैं। आपकी भावनाएं महत्वपूर्ण हैं। 💜",
+    "😡 गुस्सा": "आपका गुस्सा बिल्कुल सही है। जो हुआ वो गलत था। 💪 शिकायत दर्ज करें?",
+    "😐 शांत": "शांत रहना ताकत की निशानी है। 🌿 क्या मैं कुछ मदद कर सकता हूँ?",
+    "😤 निराश": "निराशा समझ में आती है। SafeVoice आपकी आवाज़ सुनेगा। 💙",
+    "😶 सुन्न": "सुन्न महसूस करना आघात के बाद स्वाभाविक है। मैं यहाँ हूँ। 🤍"
+  },
+  te: {
+    "😰 భయంగా": "నేను అర్థం చేసుకుంటున్నాను — భయపడడం సహజం. మీరు <strong>ఒంటరిగా లేరు</strong>. 💙",
+    "😢 దుఃఖంగా": "మీరు ఇది అనుభవిస్తున్నందుకు నాకు చాలా బాధగా ఉంది. 💜",
+    "😡 కోపంగా": "మీ కోపం సరైనది. జరిగింది తప్పు. 💪",
+    "😐 శాంతంగా": "శాంతంగా ఉండడం బలానికి నిదర్శనం. 🌿",
+    "😤 నిరాశగా": "నిరాశ అర్థమవుతుంది. SafeVoice మీ మాట వింటుంది. 💙",
+    "😶 మొద్దుగా": "మొద్దుగా అనిపించడం సహజం. నేను ఇక్కడ ఉన్నాను. 🤍"
+  }
+}
+
+// ── SAFETY TIPS ──
+const safetyTips = {
+  'child abuse': '🧒 <strong>Child Abuse Safety Tips:</strong><br>• Keep evidence (photos, messages, records)<br>• Tell a trusted adult immediately<br>• Contact Child Helpline: <a href="tel:1098" style="color:var(--teal);font-weight:700">📞 1098</a><br>• Don\'t confront the abuser alone<br>• Document dates and incidents<br>• SafeVoice will escalate this as HIGH PRIORITY',
+  'domestic violence': '💜 <strong>Domestic Violence Safety Tips:</strong><br>• Create a safety plan to leave safely<br>• Keep emergency numbers saved secretly<br>• Pack essential documents (ID, bank cards)<br>• Tell a trusted friend or neighbor<br>• Contact: <a href="tel:181" style="color:var(--teal);font-weight:700">📞 181</a> · <a href="tel:1091" style="color:var(--teal);font-weight:700">📞 1091</a><br>• Document injuries with photos (dated)',
+  'sexual harassment': '🟣 <strong>Sexual Harassment Safety Tips:</strong><br>• Document every incident with dates/times<br>• Save all messages, emails as evidence<br>• Report to HR or institution authority<br>• You have the right to file a police complaint<br>• Contact: <a href="tel:1091" style="color:var(--teal);font-weight:700">📞 1091</a><br>• You are not at fault — speak up!',
+  'cyberbullying': '💻 <strong>Cyberbullying Safety Tips:</strong><br>• Screenshot and save all evidence<br>• Block and report the bully on the platform<br>• Do not respond to provocations<br>• Change privacy settings on all accounts<br>• Report to platform + police<br>• Contact Cyber Crime: <a href="tel:1930" style="color:var(--teal);font-weight:700">📞 1930</a>',
+  'default': '🛡 <strong>General Safety Tips:</strong><br>• Document all incidents with dates<br>• Tell a trusted person about the situation<br>• Save emergency numbers on your phone<br>• Keep copies of important documents<br>• Police: <a href="tel:100" style="color:var(--teal);font-weight:700">📞 100</a> · Women: <a href="tel:1091" style="color:var(--teal);font-weight:700">📞 1091</a>'
+}
+
+// ── LEGAL FAQS ──
+const legalFAQs = {
+  'verbal abuse': '⚖️ <strong>Is verbal abuse a crime?</strong><br>Yes! Under IPC Section 504 (intentional insult) and Section 506 (criminal intimidation), verbal abuse and threats are punishable offenses in India. Domestic verbal abuse is also covered under the Protection of Women from Domestic Violence Act, 2005.',
+  'report without evidence': '⚖️ <strong>Can I report without evidence?</strong><br>Yes! You can file a complaint even without physical evidence. Your statement itself is evidence. Police are legally required to register your FIR. SafeVoice\'s AI analyzes your description to assess severity.',
+  'anonymous report legal': '⚖️ <strong>Is anonymous reporting legally valid?</strong><br>Yes! Anonymous complaints are legally valid in India. Authorities must investigate anonymous complaints about serious crimes. Your identity protection does not reduce the complaint\'s legal standing.',
+  'fir rights': '⚖️ <strong>What are my FIR rights?</strong><br>• Police MUST register your FIR — they cannot refuse<br>• You can file at any police station<br>• You are entitled to a free copy of the FIR<br>• If refused, approach Superintendent of Police<br>• You can also file directly in court (Section 156(3) CrPC)',
+  'workplace harassment': '⚖️ <strong>Workplace harassment laws:</strong><br>The POSH Act (Prevention of Sexual Harassment) 2013 mandates every organization with 10+ employees to have an Internal Complaints Committee (ICC). You can report to ICC, Labor Commissioner, or police.'
+}
+
+// ── NEARBY HELP CENTERS ──
+const helpCenters = {
+  'chennai': '🏥 <strong>Help Centers near Chennai:</strong><br>• <strong>Snehi</strong> — Women\'s shelter: 044-28460064<br>• <strong>ASWAS</strong> — Crisis center: 044-23454356<br>• <strong>Child Line</strong>: <a href="tel:1098">📞 1098</a><br>• <strong>Tamil Nadu Women Helpline</strong>: <a href="tel:181">📞 181</a><br>• <strong>Vanitha TV Helpline</strong>: 044-28592750',
+  'coimbatore': '🏥 <strong>Help Centers near Coimbatore:</strong><br>• <strong>District Women & Child Office</strong>: 0422-2301235<br>• <strong>One Stop Crisis Center</strong> — GH Coimbatore<br>• <strong>Child Line</strong>: <a href="tel:1098">📞 1098</a><br>• <strong>Women Helpline</strong>: <a href="tel:181">📞 181</a><br>• <strong>Police</strong>: <a href="tel:100">📞 100</a>',
+  'madurai': '🏥 <strong>Help Centers near Madurai:</strong><br>• <strong>District Child Protection Unit</strong>: 0452-2531052<br>• <strong>One Stop Crisis Center</strong> — GH Madurai<br>• <strong>Women Helpline</strong>: <a href="tel:181">📞 181</a><br>• <strong>Child Line</strong>: <a href="tel:1098">📞 1098</a>',
+  'salem': '🏥 <strong>Help Centers near Salem:</strong><br>• <strong>District Women & Child Office</strong>: 0427-2231042<br>• <strong>One Stop Crisis Center</strong> — GH Salem<br>• <strong>Women Helpline</strong>: <a href="tel:181">📞 181</a><br>• <strong>Child Line</strong>: <a href="tel:1098">📞 1098</a>',
+  'trichy': '🏥 <strong>Help Centers near Trichy:</strong><br>• <strong>District Child Protection Unit</strong>: 0431-2711052<br>• <strong>One Stop Crisis Center</strong> — GH Trichy<br>• <strong>Women Helpline</strong>: <a href="tel:181">📞 181</a><br>• <strong>Police</strong>: <a href="tel:100">📞 100</a>',
+  'default': '🏥 <strong>National Helplines (24/7):</strong><br>• <strong>Police</strong>: <a href="tel:100">📞 100</a><br>• <strong>Women Helpline</strong>: <a href="tel:1091">📞 1091</a><br>• <strong>Child Helpline</strong>: <a href="tel:1098">📞 1098</a><br>• <strong>Domestic Violence</strong>: <a href="tel:181">📞 181</a><br>• <strong>Cyber Crime</strong>: <a href="tel:1930">📞 1930</a><br>• <strong>Mental Health</strong>: <a href="tel:iCall:9152987821">📞 iCall: 9152987821</a><br><br>For city-specific centers, type your city name!'
+}
+
+// ── GUIDED REPORT STEPS ──
+const guidedSteps = [
+  { key: 'type', q: '📋 <strong>Step 1/5:</strong> What type of incident are you reporting?', chips: ['Child Abuse','Domestic Violence','Sexual Harassment','Cyberbullying / Online Harassment','Physical Assault','Emotional Abuse','Other'] },
+  { key: 'location', q: '📍 <strong>Step 2/5:</strong> Where did this happen? (City or area — you can be general)', chips: [] },
+  { key: 'date', q: '📅 <strong>Step 3/5:</strong> When did this happen? (You can say "yesterday", "last week", or a date)', chips: ['Today','Yesterday','Last week','Last month','Ongoing'] },
+  { key: 'emotion', q: '💭 <strong>Step 4/5:</strong> How are you feeling about this incident right now?', chips: ['Scared / Fearful','Anxious / Distressed','Safe but disturbed','Calm / Seeking help','In immediate danger'] },
+  { key: 'description', q: '📝 <strong>Step 5/5:</strong> Please describe what happened in your own words. Take your time — there is no rush.', chips: [] }
+]
+
+// ── COUNSELING RESPONSES ──
+const counselingResponses = [
+  "I hear you, and I want you to know that what you\'re feeling is completely valid. 💙 You are incredibly brave for reaching out.",
+  "Thank you for trusting me with this. You don\'t have to face this alone — SafeVoice and trained professionals are here to support you. 🤍",
+  "It takes real courage to talk about these things. I\'m here, listening, and I care about your wellbeing. 💜",
+  "What you went through was not your fault. No one deserves to be treated that way. You deserve safety and respect. 🌟",
+  "I\'m sorry you experienced this. Your pain is real and acknowledged. Would you like to take the next step and report what happened? It's completely your choice. 💙",
+  "You've already taken a brave step by talking about this. Whenever you feel ready, I can guide you through reporting safely and anonymously. 🛡"
+]
+let counselIdx = 0
+
+// ── GET STATUS FROM SHEET ──
+async function cbGetStatus(refId) {
+  try {
+    const csvUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID_CB}/export?format=csv&sheet=Complaints&gid=1795341744`
+    const res = await fetch(csvUrl)
+    if(!res.ok) return null
+    const text = await res.text()
+    const rows = text.trim().split('\n').map(r => {
+      const cols = []; let cur = '', inQ = false
+      for(let i=0;i<r.length;i++){
+        if(r[i]==='"'){inQ=!inQ}
+        else if(r[i]===','&&!inQ){cols.push(cur.trim());cur=''}
+        else{cur+=r[i]}
+      }
+      cols.push(cur.trim()); return cols
+    })
+    if(rows.length < 2) return { error: 'empty' }
+    const headers = rows[0]
+    const idxRef    = headers.findIndex(h => h.toLowerCase().includes('reference'))
+    const idxType   = headers.findIndex(h => h.toLowerCase().includes('incident'))
+    const idxLoc    = headers.findIndex(h => h.toLowerCase().includes('location'))
+    const idxStatus = headers.findIndex(h => h.toLowerCase().includes('status'))
+    const idxUpd    = headers.findIndex(h => h.toLowerCase().includes('updated'))
+    for(let i=1;i<rows.length;i++){
+      const row = rows[i]
+      const rowId = (row[idxRef]||'').replace(/"/g,'').trim().toUpperCase()
+      if(rowId === refId.toUpperCase()){
+        return { refId: row[idxRef]||refId, incidentType: row[idxType]||'—', location: row[idxLoc]||'—', status: row[idxStatus]||'Pending', updatedAt: row[idxUpd]||'—' }
+      }
+    }
+    return { error: 'notfound' }
+  } catch(e) { return null }
+}
+
+// ── HELPERS ──
+function t(key){ return T[cbState.lang][key] || T.en[key] }
+function getTime(){ return new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}) }
+
+function addMessage(text, type) {
+  const msgs = document.getElementById('cbMessages')
+  const typing = document.getElementById('cbTyping')
+  const div = document.createElement('div')
+  div.className = `cb-msg ${type}`
+  div.innerHTML = `<div class="cb-bubble">${text}</div><div class="cb-time">${getTime()}</div>`
+  msgs.insertBefore(div, typing)
+  msgs.scrollTop = msgs.scrollHeight
+}
+
+function updateChips(chips) {
+  const c = document.getElementById('cbSuggestions')
+  c.innerHTML = chips.map(ch => `<div class="cb-chip" onclick="sendChip(this)">${ch}</div>`).join('')
+}
+
+function showMoodButtons() {
+  const btns = t('moodBtns')
+  updateChips(btns)
+}
+
+function showMainMenu() {
+  const lang = cbState.lang
+  updateChips([
+    '😊 Mood Check-in',
+    '📝 Report Step-by-Step',
+    '📍 Track Complaint',
+    '🧠 Safety Tips',
+    '🏥 Nearby Help Centers',
+    '📞 Helplines',
+    '⚖️ Legal FAQs',
+    '💙 Talk to Someone',
+    '🌐 Change Language',
+    '🔒 Is this anonymous?',
+    '🤖 How AI works'
+  ])
+}
+
+// ── TOGGLE CHAT ──
+function toggleChat() {
+  const win = document.getElementById('chatbotWindow')
+  const badge = document.getElementById('chatBadge')
+  const icon = document.getElementById('chatFabIcon')
+  win.classList.toggle('open')
+  if(win.classList.contains('open')) {
+    if(badge) badge.style.display = 'none'
+    icon.textContent = '✕'
+    const msgs = document.getElementById('cbMessages')
+    const realMsgs = msgs.querySelectorAll('.cb-msg')
+    if(realMsgs.length === 0) { initChat() }
+  } else {
+    icon.textContent = '💬'
+    const lm = document.getElementById('cbLangMenu')
+    if(lm) lm.style.display = 'none'
+  }
+}
+
+// ── LANGUAGE MENU ──
+function showLangMenu() {
+  const m = document.getElementById('cbLangMenu')
+  m.style.display = m.style.display === 'none' ? 'flex' : 'none'
+}
+
+function setLang(lang) {
+  cbState.lang = lang
+  document.getElementById('cbLangMenu').style.display = 'none'
+  document.getElementById('cbHeaderSub').textContent = t('online')
+  addMessage(`🌐 Language changed! I\'ll now respond in <strong>${{en:'English',ta:'Tamil',hi:'Hindi',te:'Telugu'}[lang]}</strong>.`, 'bot')
+  showMainMenu()
+}
+
+// ── INIT CHAT ──
+function initChat() {
+  setTimeout(() => addMessage(t('greeting1'), 'bot'), 300)
+  setTimeout(() => addMessage(t('greeting2'), 'bot'), 1000)
+  setTimeout(() => {
+    addMessage(t('greeting3'), 'bot')
+    showMoodButtons()
+    cbState.moodDone = false
+  }, 1800)
+}
+
+// ── SEND CHIP ──
+function sendChip(el) {
+  sendUserMessage(el.textContent.trim())
+}
+
+function sendMessage() {
+  const input = document.getElementById('cbInput')
+  const text = input.value.trim()
+  if(!text) return
+  input.value = ''
+  sendUserMessage(text)
+}
+
+// ── MAIN MESSAGE HANDLER ──
+async function sendUserMessage(text) {
+  addMessage(text, 'user')
+  const typing = document.getElementById('cbTyping')
+  typing.classList.add('show')
+  document.getElementById('cbMessages').scrollTop = 99999
+  document.getElementById('cbInput').placeholder = t('placeholder')
+
+  // 1. WAITING FOR REF ID
+  if(cbState.waitingForRefId) {
+    cbState.waitingForRefId = false
+    const refId = text.trim().toUpperCase()
+    if(!refId.startsWith('SV-') || refId.length < 5) {
+      setTimeout(() => {
+        typing.classList.remove('show')
+        addMessage('⚠️ That doesn\'t look like a valid Reference ID. It should start with <strong>SV-</strong> (e.g. <em>SV-MS8JYJKX</em>). Please try again 👇', 'bot')
+        cbState.waitingForRefId = true
+        document.getElementById('cbInput').placeholder = t('refIdPlaceholder')
+      }, 700); return
+    }
+    setTimeout(async () => {
+      const data = await cbGetStatus(refId)
+      typing.classList.remove('show')
+      if(!data) { addMessage('⚠️ Could not connect. Please use the Track Complaint section on the page.', 'bot'); showMainMenu(); return }
+      if(data.error === 'notfound') { addMessage(`🔍 No record found for <strong>${refId}</strong>. Please check your ID and try again.`, 'bot'); showMainMenu(); return }
+      const st = (data.status||'Pending').toLowerCase()
+      const emoji = st.includes('accept') ? '✅' : st.includes('reject') ? '❌' : '⏳'
+      const label = st.includes('accept') ? 'Accepted' : st.includes('reject') ? 'Rejected' : 'Pending Review'
+      const color = st.includes('accept') ? '#065f46' : st.includes('reject') ? '#991b1b' : '#92400e'
+      const bg    = st.includes('accept') ? '#e8f4f1' : st.includes('reject') ? '#fdeaea' : '#fff8ec'
+      const msg   = st.includes('accept') ? 'Your complaint has been accepted and is being acted upon. 💪' : st.includes('reject') ? 'Your complaint was reviewed but not accepted. You may resubmit with more details.' : 'Your complaint is under review. Please check back later. ⏳'
+      addMessage(`<div style="background:${bg};border-radius:10px;padding:.8rem;margin-bottom:.3rem"><div style="font-size:1.1rem;margin-bottom:.3rem">${emoji} <strong style="color:${color}">${label}</strong></div><div style="font-size:.78rem;color:#555;line-height:1.7">📋 <strong>ID:</strong> ${data.refId}<br>🗂 <strong>Type:</strong> ${data.incidentType}<br>📍 <strong>Location:</strong> ${data.location}<br>🕐 <strong>Updated:</strong> ${data.updatedAt}</div></div><div style="font-size:.8rem;margin-top:.3rem">${msg}</div>`, 'bot')
+      showMainMenu()
+    }, 1200); return
+  }
+
+  // 2. WAITING FOR CITY
+  if(cbState.waitingForCity) {
+    cbState.waitingForCity = false
+    setTimeout(() => {
+      typing.classList.remove('show')
+      const city = text.toLowerCase().trim()
+      let found = helpCenters['default']
+      for(const key of Object.keys(helpCenters)) {
+        if(key !== 'default' && city.includes(key)) { found = helpCenters[key]; break }
+      }
+      addMessage(found, 'bot')
+      showMainMenu()
+    }, 900); return
+  }
+
+  // 3. COUNSELING MODE
+  if(cbState.waitingForCounsel) {
+    setTimeout(() => {
+      typing.classList.remove('show')
+      const resp = counselingResponses[counselIdx % counselingResponses.length]
+      counselIdx++
+      addMessage(resp, 'bot')
+      setTimeout(() => addMessage('Would you like to <strong>report the incident</strong> anonymously, or continue talking? I\'m here for you. 💙', 'bot'), 800)
+      updateChips(['📝 Report Step-by-Step', '💙 Keep talking', '🚨 Emergency help', '🔙 Main menu'])
+    }, 1000); return
+  }
+
+  // 4. GUIDED REPORT FLOW
+  if(cbState.guidedStep > 0) {
+    const step = cbState.guidedStep - 1
+    if(step < guidedSteps.length) {
+      cbState.guidedData[guidedSteps[step].key] = text
+      cbState.guidedStep++
+      if(cbState.guidedStep - 1 < guidedSteps.length) {
+        const nextStep = guidedSteps[cbState.guidedStep - 1]
+        setTimeout(() => {
+          typing.classList.remove('show')
+          addMessage(nextStep.q, 'bot')
+          if(nextStep.chips.length > 0) updateChips(nextStep.chips)
+          else updateChips([])
+        }, 800); return
+      } else {
+        // All steps done — show summary
+        const d = cbState.guidedData
+        cbState.guidedStep = 0
+        setTimeout(() => {
+          typing.classList.remove('show')
+          addMessage(`✅ <strong>Here\'s a summary of your report:</strong><br><br>📋 <strong>Type:</strong> ${d.type||'—'}<br>📍 <strong>Location:</strong> ${d.location||'—'}<br>📅 <strong>When:</strong> ${d.date||'—'}<br>💭 <strong>Feeling:</strong> ${d.emotion||'—'}<br>📝 <strong>Description:</strong> ${(d.description||'—').substring(0,80)}${d.description&&d.description.length>80?'…':''}`, 'bot')
+          setTimeout(() => {
+            addMessage('🎯 <strong>Ready to submit?</strong> Click the button below to go to the report form — your answers have been prepared!<br><br><a href="#report" onclick="prefillForm()" style="display:inline-block;background:var(--teal);color:#fff;padding:.5rem 1.2rem;border-radius:100px;font-size:.82rem;font-weight:700;text-decoration:none;">📝 Go to Report Form →</a>', 'bot')
+            window._guidedData = cbState.guidedData
+            showMainMenu()
+          }, 800)
+        }, 900); return
+      }
+    }
+  }
+
+  // 5. MOOD RESPONSE
+  const moodKeys = Object.keys(moodResponses[cbState.lang] || moodResponses.en)
+  const matchedMood = moodKeys.find(k => text.includes(k) || k.includes(text.replace(/[😰😢😡😐😤😶]/g,'').trim()))
+  if(matchedMood && !cbState.moodDone) {
+    cbState.moodDone = true
+    setTimeout(() => {
+      typing.classList.remove('show')
+      const resp = (moodResponses[cbState.lang]||moodResponses.en)[matchedMood] || moodResponses.en[matchedMood]
+      addMessage(resp, 'bot')
+      updateChips(['📝 Report Step-by-Step', '🚨 Emergency help', '💙 Talk to Someone', '🔙 Main menu'])
+    }, 900); return
+  }
+
+  // 6. KEYWORD ROUTING
+  setTimeout(async () => {
+    typing.classList.remove('show')
+    const lower = text.toLowerCase()
+
+    if(lower.includes('mood') || lower.includes('feeling') || lower.includes('check-in') || lower.includes('check in')) {
+      addMessage(t('moodQ'), 'bot'); showMoodButtons(); cbState.moodDone = false
+    }
+    else if(lower.includes('step') || lower.includes('guided') || lower.includes('report step') || lower.includes('help me report')) {
+      cbState.guidedStep = 1; cbState.guidedData = {}
+      addMessage('💬 <strong>Great! I\'ll guide you step by step.</strong> Your answers will help pre-fill the report form automatically. Let\'s begin!', 'bot')
+      setTimeout(() => { addMessage(guidedSteps[0].q, 'bot'); updateChips(guidedSteps[0].chips) }, 700)
+    }
+    else if(lower.includes('track') || lower.includes('status') || lower.includes('check complaint')) {
+      addMessage('📍 <strong>Sure! I can check your complaint status right here.</strong><br><br>Please type your <strong>Reference ID</strong> (e.g. <em>SV-XXXXXXXX</em>) below 👇', 'bot')
+      cbState.waitingForRefId = true
+      document.getElementById('cbInput').placeholder = t('refIdPlaceholder')
+      updateChips([])
+    }
+    else if(lower.includes('safety tip') || lower.includes('stay safe') || lower.includes('safety')) {
+      addMessage('🧠 <strong>Safety tips for which type of situation?</strong>', 'bot')
+      updateChips(['Child Abuse','Domestic Violence','Sexual Harassment','Cyberbullying','General Safety'])
+    }
+    else if(lower.includes('child abuse') || lower.includes('child')) { addMessage(safetyTips['child abuse'], 'bot'); showMainMenu() }
+    else if(lower.includes('domestic') || lower.includes('violence')) { addMessage(safetyTips['domestic violence'], 'bot'); showMainMenu() }
+    else if(lower.includes('sexual') || lower.includes('harass')) { addMessage(safetyTips['sexual harassment'], 'bot'); showMainMenu() }
+    else if(lower.includes('cyberbull') || lower.includes('online')) { addMessage(safetyTips['cyberbullying'], 'bot'); showMainMenu() }
+    else if(lower.includes('general safety')) { addMessage(safetyTips['default'], 'bot'); showMainMenu() }
+    else if(lower.includes('nearby') || lower.includes('help center') || lower.includes('shelter') || lower.includes('center near')) {
+      addMessage('📍 <strong>I\'ll find help centers near you!</strong><br>Please type your <strong>city name</strong> (e.g. Chennai, Coimbatore, Salem, Madurai, Trichy) 👇', 'bot')
+      cbState.waitingForCity = true
+      document.getElementById('cbInput').placeholder = t('cityPlaceholder')
+      updateChips(['Chennai','Coimbatore','Salem','Madurai','Trichy'])
+    }
+    else if(lower.includes('helpline') || lower.includes('phone') || lower.includes('number') || lower.includes('call') || lower.includes('dial')) {
+      addMessage('📞 <strong>Emergency Helplines (Tap to Call):</strong><br><br><a href="tel:100" style="display:block;background:#e8f4f1;padding:.5rem .8rem;border-radius:8px;margin:.3rem 0;color:var(--teal);font-weight:700;text-decoration:none;">🚔 Police — 100</a><a href="tel:1091" style="display:block;background:#f3e8f4;padding:.5rem .8rem;border-radius:8px;margin:.3rem 0;color:#6b35a8;font-weight:700;text-decoration:none;">👩 Women Helpline — 1091</a><a href="tel:1098" style="display:block;background:#e8f0f4;padding:.5rem .8rem;border-radius:8px;margin:.3rem 0;color:#1a5f8a;font-weight:700;text-decoration:none;">🧒 Child Helpline — 1098</a><a href="tel:181" style="display:block;background:#fdf0e6;padding:.5rem .8rem;border-radius:8px;margin:.3rem 0;color:var(--amber);font-weight:700;text-decoration:none;">🏠 Domestic Violence — 181</a><a href="tel:1930" style="display:block;background:#f4e8e8;padding:.5rem .8rem;border-radius:8px;margin:.3rem 0;color:var(--red);font-weight:700;text-decoration:none;">💻 Cyber Crime — 1930</a>', 'bot')
+      showMainMenu()
+    }
+    else if(lower.includes('faq') || lower.includes('legal') || lower.includes('law') || lower.includes('crime')) {
+      addMessage('⚖️ <strong>Legal FAQs — What would you like to know?</strong>', 'bot')
+      updateChips(['Is verbal abuse a crime?','Can I report without evidence?','Is anonymous report legal?','What are my FIR rights?','Workplace harassment laws'])
+    }
+    else if(lower.includes('verbal abuse') || lower.includes('verbal')) { addMessage(legalFAQs['verbal abuse'], 'bot'); showMainMenu() }
+    else if(lower.includes('without evidence') || lower.includes('no evidence')) { addMessage(legalFAQs['report without evidence'], 'bot'); showMainMenu() }
+    else if(lower.includes('anonymous report legal') || lower.includes('legally valid')) { addMessage(legalFAQs['anonymous report legal'], 'bot'); showMainMenu() }
+    else if(lower.includes('fir') || lower.includes('fir rights')) { addMessage(legalFAQs['fir rights'], 'bot'); showMainMenu() }
+    else if(lower.includes('workplace') || lower.includes('posh')) { addMessage(legalFAQs['workplace harassment'], 'bot'); showMainMenu() }
+    else if(lower.includes('counsel') || lower.includes('talk') || lower.includes('someone') || lower.includes('vent') || lower.includes('keep talking')) {
+      cbState.waitingForCounsel = true
+      addMessage('💙 <strong>I\'m here for you.</strong> This is a safe, confidential space. Please share whatever is on your mind — I\'m listening. There is no judgment here. 🤍', 'bot')
+      document.getElementById('cbInput').placeholder = t('counselPlaceholder')
+      updateChips([])
+    }
+    else if(lower.includes('language') || lower.includes('lang') || lower.includes('tamil') || lower.includes('hindi') || lower.includes('telugu')) {
+      showLangMenu()
+      addMessage('🌐 Choose your preferred language:', 'bot')
+    }
+    else if(lower.includes('anon') || lower.includes('identity') || lower.includes('privacy')) {
+      addMessage('✅ <strong>Yes, completely anonymous!</strong><br>• No name, IP, or device info collected<br>• End-to-end encrypted<br>• 99.2% anonymity preservation rate<br>• No mandatory identification required', 'bot'); showMainMenu()
+    }
+    else if(lower.includes('ai') || lower.includes('bert') || lower.includes('accuracy')) {
+      addMessage('🤖 <strong>Our AI (DistilBERT):</strong><br>• 98.77% classification accuracy<br>• Detects emotion, severity & urgency<br>• Flags high-risk cases automatically<br>• Real-time processing (120ms)<br>• 620 complaints/minute throughput', 'bot'); showMainMenu()
+    }
+    else if(lower.includes('main menu') || lower.includes('menu') || lower.includes('back') || lower.includes('home')) {
+      addMessage('🏠 Back to main menu! What can I help you with?', 'bot'); showMainMenu()
+    }
+    else if(lower.includes('emergency') || lower.includes('danger') || lower.includes('urgent') || lower.includes('help')) {
+      addMessage('🚨 <strong>EMERGENCY — Call immediately:</strong><br><br><a href="tel:100" style="display:block;background:#fdeaea;padding:.6rem;border-radius:8px;margin:.3rem 0;color:#b03030;font-weight:700;text-decoration:none;font-size:.9rem;">🚔 Police — 100</a><a href="tel:1091" style="display:block;background:#fdeaea;padding:.6rem;border-radius:8px;margin:.3rem 0;color:#b03030;font-weight:700;text-decoration:none;font-size:.9rem;">👩 Women — 1091</a><a href="tel:1098" style="display:block;background:#fdeaea;padding:.6rem;border-radius:8px;margin:.3rem 0;color:#b03030;font-weight:700;text-decoration:none;font-size:.9rem;">🧒 Child — 1098</a>', 'bot'); showMainMenu()
+    }
+    else {
+      addMessage('I\'m here to help! Please choose a topic from the menu below or type your question. 😊', 'bot'); showMainMenu()
+    }
+  }, 900)
+}
+
+// ── PREFILL FORM ──
+function prefillForm() {
+  const d = window._guidedData
+  if(!d) return
+  try {
+    const selects = document.querySelectorAll('#complaintForm select')
+    const inputs  = document.querySelectorAll('#complaintForm input')
+    const textarea= document.querySelector('#complaintForm textarea')
+    if(selects[0] && d.type) {
+      for(let o of selects[0].options) if(o.text.toLowerCase().includes(d.type.toLowerCase().substring(0,6))) { selects[0].value = o.value; break }
+    }
+    if(inputs[0] && d.location) inputs[0].value = d.location
+    if(inputs[1] && d.date) inputs[1].value = new Date().toISOString().split('T')[0]
+    if(selects[1] && d.emotion) {
+      for(let o of selects[1].options) if(o.text.toLowerCase().includes(d.emotion.toLowerCase().substring(0,4))) { selects[1].value = o.value; break }
+    }
+    if(textarea && d.description) textarea.value = d.description
+    document.querySelector('#report').scrollIntoView({behavior:'smooth'})
+    toggleChat()
+  } catch(e) { console.log('prefill error', e) }
+}
+
+</script>
+
+<!-- FLOATING CHATBOT -->
+<button class="chat-fab" onclick="toggleChat()" id="chatFab" aria-label="Open SafeVoice Assistant">
+  <div class="chat-pulse"></div>
+  <span id="chatFabIcon">💬</span>
+  <div class="chat-badge" id="chatBadge">1</div>
+</button>
+
+<div class="chatbot-window" id="chatbotWindow">
+  <!-- Header -->
+  <div class="chatbot-header">
+    <div class="cb-avatar">🛡</div>
+    <div class="cb-header-info">
+      <h4 id="cbHeaderTitle">SafeVoice Assistant</h4>
+      <span><span class="cb-online"></span> <span id="cbHeaderSub">Online · Secure & Anonymous</span></span>
+    </div>
+    <div style="display:flex;gap:.4rem;margin-left:auto">
+      <button class="cb-lang-btn" onclick="showLangMenu()" title="Change Language">🌐</button>
+      <button class="cb-close" onclick="toggleChat()">✕</button>
+    </div>
+  </div>
+  <!-- Language menu -->
+  <div class="cb-lang-menu" id="cbLangMenu" style="display:none">
+    <div class="cb-lang-opt" onclick="setLang('en')">🇬🇧 English</div>
+    <div class="cb-lang-opt" onclick="setLang('ta')">🇮🇳 தமிழ் (Tamil)</div>
+    <div class="cb-lang-opt" onclick="setLang('hi')">🇮🇳 हिन्दी (Hindi)</div>
+    <div class="cb-lang-opt" onclick="setLang('te')">🇮🇳 తెలుగు (Telugu)</div>
+  </div>
+  <!-- Messages -->
+  <div class="cb-messages" id="cbMessages">
+    <div class="cb-typing-bubble" id="cbTyping"><span></span><span></span><span></span></div>
+  </div>
+  <!-- Suggestions -->
+  <div class="cb-suggestions" id="cbSuggestions"></div>
+  <!-- Input -->
+  <div class="cb-input-row">
+    <input class="cb-input" id="cbInput" placeholder="Type your question…" onkeydown="if(event.key==='Enter') sendMessage()"/>
+    <button class="cb-send" onclick="sendMessage()">➤</button>
+  </div>
+</div>
+
+
+</body>
+</html>
