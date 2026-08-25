@@ -6,6 +6,15 @@ The system combines **Natural Language Processing (NLP), DistilBERT-based sentim
 
 ---
 
+## 👥 Contributors
+
+- **Mugesh Kumar .K**
+- **Manikandan .AR** 
+- **Nandha Kishore .R** 
+- **Kavin prasanth .M** 
+
+---
+
 ## 📌 Project Overview
 
 Many victims hesitate to report abuse or harassment because of **fear, social stigma, intimidation, emotional trauma, or pressure from family members**.
