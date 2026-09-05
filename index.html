@@ -9,7 +9,1616 @@
 <script>emailjs.init('vB2fZL0b5zxcQ1VEb')</script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SafeVoice — Anonymous Abuse Reporting Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>emailjs.init('vB2fZL0b5zxcQ1VEb')</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
+  --bg:#f5f2ee;
+  --bg2:#ece8e2;
+  --surface:#ffffff;
+  --ink:#1a1714;
+  --ink2:#3d3830;
+  --muted:#8a8278;
+  --border:#d8d2c8;
+  --teal:#1a6b5a;
+  --teal-light:#e8f4f1;
+  --teal-mid:#2d8f77;
+  --amber:#c4651a;
+  --amber-light:#fdf0e6;
+  --red:#b03030;
+  --red-light:#fdeaea;
+  --shadow:0 2px 20px rgba(26,23,20,0.08);
+  --shadow-lg:0 8px 40px rgba(26,23,20,0.12);
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:16px;
+  line-height:1.65;
+  overflow-x:hidden;
+}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1rem 4%;
+  background:rgba(245,242,238,0.88);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+  transition:box-shadow .3s;
+}
+nav.scrolled{box-shadow:var(--shadow)}
+.nav-brand{
+  display:flex;align-items:center;gap:.6rem;
+  font-family:'Fraunces',serif;font-weight:700;font-size:1.35rem;
+  color:var(--teal);text-decoration:none;
+}
+.nav-brand .shield{
+  width:34px;height:34px;background:var(--teal);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;color:#fff;font-size:1rem;
+}
+.nav-links{display:flex;align-items:center;gap:2rem;list-style:none}
+.nav-links a{color:var(--ink2);text-decoration:none;font-size:.88rem;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--teal)}
+.nav-cta{
+  background:var(--teal);color:#fff;padding:.55rem 1.4rem;
+  border-radius:100px;font-size:.88rem;font-weight:600;
+  text-decoration:none;transition:background .2s,transform .2s;
+}
+.nav-cta:hover{background:var(--teal-mid);transform:translateY(-1px)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.hamburger span{width:22px;height:2px;background:var(--ink);border-radius:2px;transition:.3s}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;
+  display:grid;grid-template-columns:1fr 1fr;
+  align-items:center;gap:4rem;
+  padding:7rem 4% 5rem;
+  max-width:1300px;margin:0 auto;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:var(--teal-light);border:1px solid #b6ddd6;
+  color:var(--teal);padding:.35rem 1rem;border-radius:100px;
+  font-size:.78rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;
+  margin-bottom:1.5rem;animation:fadeUp .6s ease both;
+}
+.hero-badge .dot{width:6px;height:6px;background:var(--teal);border-radius:50%;animation:pulse 2s infinite}
+h1{
+  font-family:'Fraunces',serif;
+  font-size:clamp(2.8rem,5vw,4.2rem);
+  font-weight:700;line-height:1.08;letter-spacing:-.02em;
+  margin-bottom:1.3rem;animation:fadeUp .7s .1s ease both;
+}
+h1 em{color:var(--teal);font-style:italic}
+.hero-sub{
+  color:var(--muted);font-size:1.05rem;font-weight:400;
+  max-width:480px;margin-bottom:2.2rem;animation:fadeUp .7s .2s ease both;
+}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;animation:fadeUp .7s .3s ease both}
+.btn-primary{
+  background:var(--teal);color:#fff;
+  padding:.85rem 2rem;border-radius:100px;
+  font-weight:700;font-size:.95rem;text-decoration:none;
+  display:inline-flex;align-items:center;gap:.5rem;
+  transition:background .2s,transform .2s,box-shadow .2s;
+  box-shadow:0 4px 20px rgba(26,107,90,.25);
+}
+.btn-primary:hover{background:var(--teal-mid);transform:translateY(-2px);box-shadow:0 8px 30px rgba(26,107,90,.35)}
+.btn-secondary{
+  background:transparent;color:var(--ink);
+  padding:.85rem 2rem;border-radius:100px;
+  font-weight:600;font-size:.95rem;text-decoration:none;
+  border:1.5px solid var(--border);
+  display:inline-flex;align-items:center;gap:.5rem;
+  transition:border-color .2s,background .2s;
+}
+.btn-secondary:hover{border-color:var(--ink2);background:var(--bg2)}
+.hero-trust{
+  display:flex;gap:1.5rem;margin-top:2.5rem;flex-wrap:wrap;
+  animation:fadeUp .7s .4s ease both;
+}
+.trust-item{display:flex;align-items:center;gap:.4rem;font-size:.8rem;color:var(--muted);font-weight:500}
+.trust-item .check{
+  width:18px;height:18px;background:var(--teal-light);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--teal);font-size:.6rem;flex-shrink:0;
+}
+.hero-visual{position:relative;animation:fadeUp .8s .2s ease both}
+.hero-card-main{
+  background:var(--surface);border-radius:20px;
+  padding:2rem;box-shadow:var(--shadow-lg);border:1px solid var(--border);
+}
+.hc-header{
+  display:flex;align-items:center;gap:.75rem;margin-bottom:1.5rem;
+  padding-bottom:1rem;border-bottom:1px solid var(--border);
+}
+.hc-avatar{
+  width:40px;height:40px;background:var(--teal);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.1rem;
+}
+.hc-title{font-weight:700;font-size:.95rem}
+.hc-sub{font-size:.78rem;color:var(--muted)}
+.chat-bubble{
+  padding:.75rem 1rem;border-radius:14px;
+  font-size:.85rem;line-height:1.5;margin-bottom:.75rem;max-width:85%;
+}
+.chat-bubble.bot{background:var(--teal-light);color:var(--ink2)}
+.chat-bubble.user{background:var(--teal);color:#fff;margin-left:auto}
+.typing{
+  display:flex;gap:4px;align-items:center;padding:.6rem 1rem;
+  background:var(--bg2);border-radius:14px;width:fit-content;
+}
+.typing span{
+  width:6px;height:6px;background:var(--muted);border-radius:50%;
+  animation:typingDot 1.4s infinite;
+}
+.typing span:nth-child(2){animation-delay:.2s}
+.typing span:nth-child(3){animation-delay:.4s}
+.hero-badge-float{
+  position:absolute;top:-16px;right:-16px;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:12px;padding:.8rem 1.1rem;
+  box-shadow:var(--shadow);
+  display:flex;align-items:center;gap:.5rem;
+  font-size:.78rem;font-weight:600;
+}
+.hero-badge-float .num{font-family:'Fraunces',serif;font-size:1.4rem;color:var(--teal)}
+.hero-badge-float2{
+  position:absolute;bottom:-16px;left:-16px;
+  background:var(--teal);border-radius:12px;padding:.8rem 1.1rem;
+  box-shadow:0 4px 20px rgba(26,107,90,.3);
+  display:flex;align-items:center;gap:.5rem;
+  font-size:.78rem;font-weight:600;color:#fff;
+}
+
+/* ── STATS STRIP ── */
+.stats-strip{background:var(--ink);color:#fff;padding:3rem 4%}
+.stats-inner{
+  max-width:1100px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;text-align:center;
+}
+.stat-num{
+  font-family:'Fraunces',serif;font-size:2.6rem;font-weight:700;
+  color:var(--teal-mid);letter-spacing:-.02em;
+}
+.stat-label{font-size:.82rem;color:#a09890;margin-top:.2rem}
+
+/* ── SECTION BASE ── */
+section{padding:6rem 4%}
+.section-inner{max-width:1100px;margin:0 auto}
+.eyebrow{
+  font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--teal);margin-bottom:.7rem;
+}
+.section-title{
+  font-family:'Fraunces',serif;font-size:clamp(2rem,3.5vw,2.8rem);
+  font-weight:700;letter-spacing:-.02em;line-height:1.15;margin-bottom:1rem;
+}
+.section-sub{color:var(--muted);max-width:520px;font-size:1rem}
+
+/* ── HOW IT WORKS ── */
+.how-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:2rem;margin-top:3.5rem}
+.step-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:16px;padding:2rem;
+  position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s;
+}
+.step-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.step-card::before{
+  content:attr(data-step);position:absolute;top:-10px;right:16px;
+  font-family:'Fraunces',serif;font-size:5rem;font-weight:700;
+  color:var(--bg2);line-height:1;pointer-events:none;
+}
+.step-icon{
+  width:48px;height:48px;border-radius:12px;background:var(--teal-light);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;margin-bottom:1.2rem;
+}
+.step-title{font-weight:700;font-size:1.05rem;margin-bottom:.4rem}
+.step-desc{color:var(--muted);font-size:.88rem;line-height:1.65}
+
+/* ── FEATURES ── */
+.features-bg{background:var(--ink)}
+.features-bg .section-title{color:#fff}
+.features-bg .section-sub{color:#9a9288}
+.features-bg .eyebrow{color:#5ec9b0}
+.feat-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;
+  background:rgba(255,255,255,.08);border-radius:20px;
+  overflow:hidden;margin-top:3.5rem;
+}
+.feat-card{background:#1f1c19;padding:2rem;transition:background .25s;position:relative}
+.feat-card:hover{background:#272320}
+.feat-card::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--teal),#5ec9b0);
+  transform:scaleX(0);transform-origin:left;transition:.35s;
+}
+.feat-card:hover::after{transform:scaleX(1)}
+.feat-icon{
+  width:44px;height:44px;border-radius:10px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;font-size:1.2rem;
+  margin-bottom:1.2rem;transition:border-color .2s;
+}
+.feat-card:hover .feat-icon{border-color:var(--teal)}
+.feat-title{color:#eeeae6;font-weight:700;font-size:1rem;margin-bottom:.4rem}
+.feat-desc{color:#756e66;font-size:.87rem;line-height:1.65}
+
+/* ── REPORT FORM ── */
+.report-section{background:var(--bg2)}
+.report-wrap{display:grid;grid-template-columns:1fr 1.2fr;gap:4rem;align-items:start;margin-top:3rem}
+.report-info h3{font-family:'Fraunces',serif;font-size:1.6rem;margin-bottom:1rem}
+.report-info p{color:var(--muted);margin-bottom:1.5rem;font-size:.95rem}
+.privacy-badges{display:flex;flex-direction:column;gap:.75rem;margin-top:1.5rem}
+.priv-badge{
+  display:flex;align-items:center;gap:.75rem;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:10px;padding:.75rem 1rem;font-size:.85rem;font-weight:500;
+}
+.priv-badge .icon{
+  width:32px;height:32px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;
+}
+.priv-badge.green .icon{background:var(--teal-light);color:var(--teal)}
+.priv-badge.amber .icon{background:var(--amber-light);color:var(--amber)}
+.complaint-form{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:20px;padding:2.5rem;box-shadow:var(--shadow);
+}
+.form-header{
+  display:flex;align-items:center;gap:.75rem;margin-bottom:2rem;
+  padding-bottom:1.2rem;border-bottom:1px solid var(--border);
+}
+.form-logo{
+  width:38px;height:38px;background:var(--teal);border-radius:9px;
+  display:flex;align-items:center;justify-content:center;color:#fff;font-size:1rem;
+}
+.form-header-text h4{font-weight:700;font-size:.95rem}
+.form-header-text span{font-size:.78rem;color:var(--muted)}
+.form-group{margin-bottom:1.3rem}
+.form-group label{display:block;font-size:.82rem;font-weight:600;color:var(--ink2);margin-bottom:.45rem}
+.form-group input,
+.form-group select,
+.form-group textarea{
+  width:100%;border:1.5px solid var(--border);
+  border-radius:10px;padding:.75rem 1rem;
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;
+  color:var(--ink);background:var(--bg);
+  transition:border-color .2s,box-shadow .2s;outline:none;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(26,107,90,.1)}
+.form-group textarea{resize:vertical;min-height:110px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-submit{
+  width:100%;background:var(--teal);color:#fff;
+  padding:.9rem;border:none;border-radius:100px;
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:1rem;
+  cursor:pointer;transition:background .2s,transform .2s,box-shadow .2s;
+  margin-top:.5rem;display:flex;align-items:center;justify-content:center;gap:.5rem;
+}
+.form-submit:hover{background:var(--teal-mid);transform:translateY(-2px);box-shadow:0 6px 20px rgba(26,107,90,.3)}
+.form-note{text-align:center;font-size:.77rem;color:var(--muted);margin-top:.75rem;display:flex;align-items:center;justify-content:center;gap:.3rem}
+
+/* ── PERFORMANCE ── */
+.perf-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2rem;margin-top:3.5rem}
+.perf-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2rem;box-shadow:var(--shadow)}
+.perf-card h4{font-weight:700;font-size:1rem;margin-bottom:1.5rem;color:var(--ink2)}
+.metric-bar{margin-bottom:1.1rem}
+.metric-top{display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:.4rem}
+.metric-name{font-weight:500;color:var(--ink2)}
+.metric-val{font-weight:700;color:var(--teal)}
+.bar-track{height:8px;background:var(--bg2);border-radius:100px;overflow:hidden}
+.bar-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--teal),#5ec9b0);transition:width 1.5s ease;width:0}
+.model-compare{margin-top:.5rem}
+.model-row{display:flex;align-items:center;gap:.75rem;padding:.6rem 0;border-bottom:1px solid var(--border);font-size:.85rem}
+.model-row:last-child{border-bottom:none}
+.model-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.model-name{flex:1;font-weight:500}
+.model-score{font-weight:700}
+
+/* ── CONCLUSION ── */
+.conclusion-bg{background:var(--teal)}
+.conclusion-bg .eyebrow{color:#a8ddd3}
+.conclusion-bg .section-title{color:#fff}
+.concl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3rem}
+.concl-card{
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);
+  border-radius:16px;padding:2rem;backdrop-filter:blur(10px);transition:background .2s;
+}
+.concl-card:hover{background:rgba(255,255,255,.15)}
+.concl-num{font-family:'Fraunces',serif;font-size:2.5rem;font-weight:700;color:rgba(255,255,255,.25);line-height:1;margin-bottom:.5rem}
+.concl-title{color:#fff;font-weight:700;font-size:1.05rem;margin-bottom:.5rem}
+.concl-desc{color:rgba(255,255,255,.7);font-size:.87rem;line-height:1.65}
+
+/* ── FOOTER ── */
+footer{background:var(--ink);color:#fff;padding:3rem 4% 2rem}
+.footer-inner{
+  max-width:1100px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  padding-bottom:1.5rem;border-bottom:1px solid rgba(255,255,255,.08);
+  flex-wrap:wrap;gap:1rem;
+}
+.footer-brand{font-family:'Fraunces',serif;font-size:1.2rem;font-weight:700;color:var(--teal-mid)}
+.footer-links{display:flex;gap:2rem;list-style:none;flex-wrap:wrap}
+.footer-links a{color:#756e66;text-decoration:none;font-size:.85rem;transition:color .2s}
+.footer-links a:hover{color:#fff}
+.footer-bottom{max-width:1100px;margin:.75rem auto 0;display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem;font-size:.78rem;color:#4a4540}
+.emergency-banner{
+  background:var(--red-light);border:1.5px solid #f5c2c2;
+  border-radius:12px;padding:1rem 1.5rem;margin-bottom:2rem;
+  display:flex;align-items:center;gap:.75rem;font-size:.88rem;
+}
+.emergency-banner .icon{font-size:1.2rem}
+.emergency-banner strong{color:var(--red)}
+
+/* ── MODAL ── */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(26,23,20,.6);
+  backdrop-filter:blur(4px);z-index:500;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .3s;padding:1rem;
+}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{
+  background:var(--surface);border-radius:20px;padding:2.5rem;
+  max-width:460px;width:100%;box-shadow:0 20px 60px rgba(26,23,20,.2);
+  transform:translateY(20px);transition:transform .3s;position:relative;
+}
+.modal-overlay.open .modal{transform:translateY(0)}
+.modal-close{
+  position:absolute;top:1rem;right:1rem;background:var(--bg2);border:none;
+  border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:1rem;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--muted);transition:background .2s;
+}
+.modal-close:hover{background:var(--border)}
+.modal h3{font-family:'Fraunces',serif;font-size:1.5rem;margin-bottom:.5rem}
+.modal p{color:var(--muted);font-size:.9rem;margin-bottom:1.5rem}
+.success-icon{width:60px;height:60px;background:var(--teal-light);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto 1.2rem}
+
+/* ── TOAST ── */
+.toast{
+  position:fixed;bottom:2rem;right:2rem;z-index:600;
+  background:var(--ink);color:#fff;padding:1rem 1.5rem;
+  border-radius:12px;font-size:.88rem;font-weight:500;
+  box-shadow:var(--shadow-lg);
+  transform:translateY(20px);opacity:0;pointer-events:none;
+  transition:.3s;display:flex;align-items:center;gap:.5rem;
+}
+.toast.show{transform:translateY(0);opacity:1}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes typingDot{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ── FILE UPLOAD ── */
+.upload-zone{
+  border:2px dashed var(--border);border-radius:12px;
+  padding:1.5rem 1rem;text-align:center;cursor:pointer;
+  background:var(--bg);transition:border-color .2s,background .2s;position:relative;
+}
+.upload-zone:hover,.upload-zone.dragover{border-color:var(--teal);background:var(--teal-light)}
+.upload-zone input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.upload-icon{font-size:1.8rem;margin-bottom:.4rem}
+.upload-text{font-size:.85rem;font-weight:600;color:var(--ink2)}
+.upload-hint{font-size:.75rem;color:var(--muted);margin-top:.2rem}
+.upload-preview{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.75rem}
+.preview-item{display:flex;align-items:center;gap:.4rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.35rem .7rem;font-size:.78rem;font-weight:500}
+.preview-item .remove{background:none;border:none;color:var(--red);cursor:pointer;font-size:.85rem;padding:0;line-height:1}
+.upload-size-warn{font-size:.73rem;color:var(--amber);margin-top:.4rem;display:none}
+
+/* ── TRACKING ── */
+.track-section{background:var(--bg2);min-height:60vh;display:flex;align-items:center}
+.track-box{max-width:560px;margin:0 auto;width:100%;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:2.5rem;box-shadow:var(--shadow-lg)}
+.track-box h2{font-family:'Fraunces',serif;font-size:1.8rem;margin-bottom:.4rem}
+.track-box p{color:var(--muted);font-size:.92rem;margin-bottom:1.5rem}
+.track-input-row{display:flex;gap:.75rem}
+.track-input{flex:1;border:1.5px solid var(--border);border-radius:10px;padding:.75rem 1rem;font-family:'Plus Jakarta Sans',sans-serif;font-size:.95rem;color:var(--ink);background:var(--bg);outline:none;transition:border-color .2s,box-shadow .2s;letter-spacing:.05em;text-transform:uppercase}
+.track-input:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(26,107,90,.1)}
+.track-btn{background:var(--teal);color:#fff;border:none;padding:.75rem 1.5rem;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.9rem;cursor:pointer;transition:background .2s,transform .2s;white-space:nowrap}
+.track-btn:hover{background:var(--teal-mid);transform:translateY(-1px)}
+.track-result{margin-top:1.5rem;border-radius:14px;padding:1.5rem;display:none;border:1px solid var(--border)}
+.track-result.show{display:block}
+.track-result.pending{background:#fff8ec;border-color:#f5d78e}
+.track-result.accepted{background:#e8f4f1;border-color:#b6ddd6}
+.track-result.rejected{background:#fdeaea;border-color:#f5c2c2}
+.track-result.notfound{background:var(--bg2);border-color:var(--border)}
+.status-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem 1rem;border-radius:100px;font-weight:700;font-size:.85rem;margin-bottom:1rem}
+.status-badge.pending{background:#fef3c7;color:#92400e}
+.status-badge.accepted{background:#d1fae5;color:#065f46}
+.status-badge.rejected{background:#fee2e2;color:#991b1b}
+.track-detail-row{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:1px solid var(--border);font-size:.88rem}
+.track-detail-row:last-child{border-bottom:none}
+.track-detail-label{color:var(--muted);font-weight:500}
+.track-detail-val{font-weight:600;color:var(--ink2)}
+.track-spinner{display:none;text-align:center;padding:1rem;color:var(--muted);font-size:.9rem}
+.track-spinner.show{display:block}
+
+/* Accept/Reject page */
+.action-page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;background:var(--bg)}
+.action-box{max-width:500px;width:100%;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:2.5rem;box-shadow:var(--shadow-lg);text-align:center}
+.action-icon{font-size:3rem;margin-bottom:1rem}
+.action-box h2{font-family:'Fraunces',serif;font-size:1.6rem;margin-bottom:.5rem}
+.action-box p{color:var(--muted);font-size:.9rem;margin-bottom:1.5rem}
+.action-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn-accept{background:#065f46;color:#fff;border:none;padding:.85rem 2rem;border-radius:100px;font-weight:700;font-size:.95rem;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:.5rem}
+.btn-accept:hover{background:#047857;transform:translateY(-2px)}
+.btn-reject{background:#991b1b;color:#fff;border:none;padding:.85rem 2rem;border-radius:100px;font-weight:700;font-size:.95rem;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:.5rem}
+.btn-reject:hover{background:#b91c1c;transform:translateY(-2px)}
+.action-done{display:none}
+.action-done.show{display:block}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;padding:6rem 4% 4rem;text-align:center}
+  .hero-sub{max-width:100%}
+  .hero-actions{justify-content:center}
+  .hero-trust{justify-content:center}
+  .hero-visual{display:none}
+  .stats-inner{grid-template-columns:repeat(2,1fr)}
+  .feat-grid{grid-template-columns:1fr}
+  .report-wrap{grid-template-columns:1fr}
+  .perf-grid{grid-template-columns:1fr}
+  .concl-grid{grid-template-columns:1fr}
+  .nav-links,.nav-cta{display:none}
+  .hamburger{display:flex}
+}
+@media(max-width:600px){
+  .stats-inner{grid-template-columns:1fr 1fr}
+  .form-row{grid-template-columns:1fr}
+}
+
+/* ══════════════════════════════════════════════════
+   SIMPLIFIED CHATBOT STYLES
+   ══════════════════════════════════════════════════ */
+.chat-fab{
+  position:fixed;bottom:2rem;right:2rem;z-index:999;
+  width:58px;height:58px;border-radius:50%;
+  background:var(--teal);color:#fff;border:none;cursor:pointer;
+  box-shadow:0 4px 24px rgba(26,107,90,.45);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;transition:transform .3s,box-shadow .3s;
+}
+.chat-fab:hover{transform:scale(1.12);box-shadow:0 8px 32px rgba(26,107,90,.55)}
+.chat-pulse{
+  position:absolute;width:100%;height:100%;border-radius:50%;
+  background:rgba(26,107,90,.3);animation:chatPulse 2s infinite;pointer-events:none;
+}
+@keyframes chatPulse{0%{transform:scale(1);opacity:1}100%{transform:scale(1.7);opacity:0}}
+.chat-badge{
+  position:absolute;top:-3px;right:-3px;width:18px;height:18px;
+  background:#e53e3e;border-radius:50%;border:2px solid #fff;
+  font-size:.58rem;font-weight:700;color:#fff;
+  display:flex;align-items:center;justify-content:center;
+}
+.chatbot-window{
+  position:fixed;bottom:6rem;right:2rem;z-index:998;width:370px;
+  background:var(--surface);border-radius:20px;
+  box-shadow:0 12px 50px rgba(26,23,20,.18);border:1px solid var(--border);
+  display:flex;flex-direction:column;overflow:hidden;
+  transform:scale(.85) translateY(20px);transform-origin:bottom right;
+  opacity:0;pointer-events:none;transition:transform .3s,opacity .3s;
+}
+.chatbot-window.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all}
+.chatbot-header{
+  background:var(--teal);color:#fff;padding:1rem 1.2rem;
+  display:flex;align-items:center;gap:.75rem;
+}
+.cb-avatar{
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(255,255,255,.2);
+  display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;
+}
+.cb-header-info h4{font-weight:700;font-size:.9rem;margin-bottom:.1rem}
+.cb-header-info span{font-size:.72rem;opacity:.8;display:flex;align-items:center;gap:.3rem}
+.cb-online{width:6px;height:6px;background:#4ade80;border-radius:50%;display:inline-block}
+.cb-close{
+  margin-left:auto;background:rgba(255,255,255,.15);border:none;color:#fff;
+  width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:.85rem;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s;flex-shrink:0;
+}
+.cb-close:hover{background:rgba(255,255,255,.3)}
+.cb-messages{
+  flex:1;overflow-y:auto;padding:1rem;
+  display:flex;flex-direction:column;gap:.6rem;max-height:320px;
+}
+.cb-messages::-webkit-scrollbar{width:3px}
+.cb-messages::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.cb-msg{display:flex;flex-direction:column;max-width:88%}
+.cb-msg.bot{align-self:flex-start}
+.cb-msg.user{align-self:flex-end}
+.cb-bubble{padding:.65rem .95rem;border-radius:14px;font-size:.83rem;line-height:1.55}
+.cb-msg.bot .cb-bubble{background:var(--teal-light);color:var(--ink2);border-bottom-left-radius:4px}
+.cb-msg.user .cb-bubble{background:var(--teal);color:#fff;border-bottom-right-radius:4px}
+.cb-time{font-size:.63rem;color:var(--muted);margin-top:.15rem;padding:0 .2rem}
+.cb-msg.user .cb-time{text-align:right}
+.cb-typing-bubble{
+  align-self:flex-start;background:var(--teal-light);
+  border-radius:14px;border-bottom-left-radius:4px;padding:.6rem .9rem;display:none;
+}
+.cb-typing-bubble.show{display:flex;gap:4px;align-items:center}
+.cb-typing-bubble span{
+  width:6px;height:6px;background:var(--teal);border-radius:50%;
+  animation:typingDot 1.2s infinite;
+}
+.cb-typing-bubble span:nth-child(2){animation-delay:.2s}
+.cb-typing-bubble span:nth-child(3){animation-delay:.4s}
+.cb-input-row{display:flex;gap:.5rem;padding:.75rem .9rem;border-top:1px solid var(--border)}
+.cb-input{
+  flex:1;border:1.5px solid var(--border);border-radius:100px;
+  padding:.48rem .95rem;font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:.83rem;color:var(--ink);background:var(--bg);outline:none;
+  transition:border-color .2s;
+}
+.cb-input:focus{border-color:var(--teal)}
+.cb-send{
+  background:var(--teal);color:#fff;border:none;width:34px;height:34px;
+  border-radius:50%;cursor:pointer;font-size:.85rem;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s,transform .2s;flex-shrink:0;
+}
+.cb-send:hover{background:var(--teal-mid);transform:scale(1.1)}
+
+/* Result cards inside chatbot */
+.cb-result-card{
+  border-radius:12px;padding:.9rem 1rem;margin-top:.2rem;
+  font-size:.82rem;line-height:1.6;
+}
+.cb-result-card.negative{
+  background:#fdeaea;border:1.5px solid #f5c2c2;
+}
+.cb-result-card.positive{
+  background:#e8f4f1;border:1.5px solid #b6ddd6;
+}
+.cb-result-title{font-weight:700;font-size:.88rem;margin-bottom:.4rem}
+.cb-result-card.negative .cb-result-title{color:#b03030}
+.cb-result-card.positive .cb-result-title{color:#065f46}
+.cb-helpline-link{
+  display:flex;align-items:center;gap:.5rem;
+  background:rgba(176,48,48,.1);border-radius:8px;
+  padding:.45rem .75rem;margin:.3rem 0;
+  color:#b03030;font-weight:700;text-decoration:none;font-size:.82rem;
+  transition:background .15s;
+}
+.cb-helpline-link:hover{background:rgba(176,48,48,.18)}
+.cb-reg-badge{
+  display:inline-flex;align-items:center;gap:.4rem;
+  background:#d1fae5;color:#065f46;
+  padding:.4rem .9rem;border-radius:100px;
+  font-weight:700;font-size:.82rem;margin-top:.3rem;
+}
+
+@media(max-width:420px){.chatbot-window{width:calc(100vw - 2rem);right:1rem}}
+</style>
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast" id="toast">✅ Report submitted anonymously</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-brand">
+    <div class="shield">🛡</div>
+    SafeVoice
+  </a>
+  <ul class="nav-links">
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#performance">Performance</a></li>
+    <li><a href="#report">Report</a></li>
+    <li><a href="#track">Track Complaint</a></li>
+  </ul>
+  <a href="#report" class="nav-cta">Report Safely →</a>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section style="padding:0">
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-badge"><span class="dot"></span> AI-Powered · Anonymous · Secure</div>
+      <h1>Your Voice,<br><em>Safely Heard</em></h1>
+      <p class="hero-sub">A web-based anonymous complaint reporting platform for victims of child abuse, domestic violence, and sexual harassment — powered by DistilBERT AI, no identity required.</p>
+      <div class="hero-actions">
+        <a href="#report" class="btn-primary">🔒 Report Anonymously</a>
+        <a href="#how" class="btn-secondary">Learn How It Works</a>
+      </div>
+      <div class="hero-trust">
+        <div class="trust-item"><div class="check">✓</div> 99.2% Anonymity Preserved</div>
+        <div class="trust-item"><div class="check">✓</div> 98.77% AI Accuracy</div>
+        <div class="trust-item"><div class="check">✓</div> End-to-End Encrypted</div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-badge-float">
+        <div>
+          <div class="num" style="font-family:'Fraunces',serif;font-size:1.4rem;color:var(--teal)">98.8%</div>
+          <div style="font-size:.7rem;color:var(--muted);font-weight:400">Classification Accuracy</div>
+        </div>
+      </div>
+      <div class="hero-card-main">
+        <div class="hc-header">
+          <div class="hc-avatar">🤖</div>
+          <div>
+            <div class="hc-title">SafeVoice Chatbot</div>
+            <div class="hc-sub">● Online · Secure Channel</div>
+          </div>
+        </div>
+        <div class="chat-bubble bot">Hello, I'm here to help you report safely. Your identity is fully protected. What happened?</div>
+        <div class="chat-bubble user">I need to report an incident but I'm scared of being identified.</div>
+        <div class="chat-bubble bot">I completely understand. No personal information is required. You're safe here. Can you describe what occurred?</div>
+        <div class="typing"><span></span><span></span><span></span></div>
+      </div>
+      <div class="hero-badge-float2">🔒 End-to-End Encrypted</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="stats-strip">
+  <div class="stats-inner">
+    <div class="reveal">
+      <div class="stat-num" data-target="98.77">0</div>
+      <div class="stat-label">% Classification Accuracy</div>
+    </div>
+    <div class="reveal">
+      <div class="stat-num" data-target="93.6">0</div>
+      <div class="stat-label">% Emotion Detection Accuracy</div>
+    </div>
+    <div class="reveal">
+      <div class="stat-num" data-target="99.2">0</div>
+      <div class="stat-label">% Anonymity Preservation Rate</div>
+    </div>
+    <div class="reveal">
+      <div class="stat-num" data-target="620">0</div>
+      <div class="stat-label">Complaints/Minute Throughput</div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="eyebrow">Process</div>
+      <h2 class="section-title">How SafeVoice Works</h2>
+      <p class="section-sub">A simple, secure, and empathetic process designed to protect victims while ensuring swift response.</p>
+    </div>
+    <div class="how-grid">
+      <div class="step-card reveal" data-step="01">
+        <div class="step-icon">💬</div>
+        <div class="step-title">Submit Anonymously</div>
+        <div class="step-desc">Use our chatbot or structured form to describe the incident in your own words — no name, no identity, no fear.</div>
+      </div>
+      <div class="step-card reveal" data-step="02">
+        <div class="step-icon">🧠</div>
+        <div class="step-title">AI Analysis</div>
+        <div class="step-desc">Our DistilBERT model detects emotion, severity, and urgency in real-time with 98.77% classification accuracy.</div>
+      </div>
+      <div class="step-card reveal" data-step="03">
+        <div class="step-icon">⚡</div>
+        <div class="step-title">Auto Escalation</div>
+        <div class="step-desc">High-risk cases are automatically flagged and routed to the relevant authorities within 120ms inference time.</div>
+      </div>
+      <div class="step-card reveal" data-step="04">
+        <div class="step-icon">🔒</div>
+        <div class="step-title">Secure & Protected</div>
+        <div class="step-desc">All data is stored in an encrypted database with no mandatory personal identification and controlled access.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="features-bg">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="eyebrow">Capabilities</div>
+      <h2 class="section-title">Built for Safety & Scale</h2>
+      <p class="section-sub" style="color:#756e66">Every component designed with victim safety, privacy, and reliable performance in mind.</p>
+    </div>
+    <div class="feat-grid reveal">
+      <div class="feat-card">
+        <div class="feat-icon">🤖</div>
+        <div class="feat-title">Conversational Chatbot</div>
+        <div class="feat-desc">NLP-powered chatbot lets victims describe incidents freely. DistilBERT instantly classifies sentiment and urgency.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">📋</div>
+        <div class="feat-title">Form-Based Submission</div>
+        <div class="feat-desc">Structured form collects incident type, location, time, and emotional state — designed for simplicity and emotional comfort.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🧪</div>
+        <div class="feat-title">DistilBERT AI Engine</div>
+        <div class="feat-desc">Fine-tuned transformer model performs sentiment classification and urgency identification with industry-leading accuracy.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🛡</div>
+        <div class="feat-title">Privacy-First Architecture</div>
+        <div class="feat-desc">End-to-end encrypted communication. No mandatory personal ID. 99.2% anonymity preservation with 98.7% data security success rate.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🚨</div>
+        <div class="feat-title">Escalation & Response</div>
+        <div class="feat-desc">Automatically identifies high-risk cases and displays emergency helpline numbers for immediate intervention.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">📊</div>
+        <div class="feat-title">Real-Time Processing</div>
+        <div class="feat-desc">120ms inference time with 620 complaints/minute throughput ensures scalable, real-time analysis even under high workload.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REPORT FORM -->
+<section id="report" class="report-section">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="eyebrow">Safe Reporting</div>
+      <h2 class="section-title">Submit a Report</h2>
+    </div>
+    <div class="emergency-banner reveal">
+      <span class="icon">🆘</span>
+      <div><strong>Emergency?</strong> If you are in immediate danger, please call <strong>100 (Police)</strong> or <strong>1091 (Women Helpline)</strong> immediately.</div>
+    </div>
+    <div class="report-wrap">
+      <div class="report-info reveal">
+        <h3>Your safety is our priority</h3>
+        <p>This form is completely anonymous. We do not collect your IP address, name, or any identifying information. Describe the incident in as much or as little detail as you are comfortable with.</p>
+        <p style="color:var(--muted);font-size:.9rem">All reports are analyzed by our AI system and routed to appropriate authorities based on severity and urgency.</p>
+        <div class="privacy-badges">
+          <div class="priv-badge green">
+            <div class="icon">🔒</div>
+            <div><strong>End-to-End Encrypted</strong><br><span style="color:var(--muted);font-size:.78rem">Your data is encrypted in transit and at rest</span></div>
+          </div>
+          <div class="priv-badge green">
+            <div class="icon">👤</div>
+            <div><strong>No Identity Required</strong><br><span style="color:var(--muted);font-size:.78rem">Zero personal information collected</span></div>
+          </div>
+          <div class="priv-badge amber">
+            <div class="icon">⚡</div>
+            <div><strong>AI-Powered Analysis</strong><br><span style="color:var(--muted);font-size:.78rem">Real-time emotion & urgency detection</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="complaint-form reveal">
+        <div class="form-header">
+          <div class="form-logo">🛡</div>
+          <div class="form-header-text">
+            <h4>Anonymous Complaint Form</h4>
+            <span>Secure · Private · Confidential</span>
+          </div>
+        </div>
+        <form id="complaintForm">
+          <div class="form-group">
+            <label>Type of Incident *</label>
+            <select required>
+              <option value="">Select incident type…</option>
+              <option>Child Abuse</option>
+              <option>Domestic Violence</option>
+              <option>Sexual Harassment</option>
+              <option>Physical Assault</option>
+              <option>Emotional/Psychological Abuse</option>
+              <option>Cyberbullying / Online Harassment</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Location (City/Area)</label>
+              <input type="text" placeholder="e.g. Coimbatore, Tamil Nadu"/>
+            </div>
+            <div class="form-group">
+              <label>When did this occur?</label>
+              <input type="date"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Your Current Emotional State</label>
+            <select>
+              <option value="">How are you feeling right now?</option>
+              <option>Safe but disturbed</option>
+              <option>Anxious / Fearful</option>
+              <option>Distressed</option>
+              <option>In immediate danger</option>
+              <option>Calm / Seeking information</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Describe the Incident *</label>
+            <textarea required placeholder="Describe what happened in your own words…"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Upload Evidence <span style="color:var(--muted);font-weight:400">(Images / Videos — Optional)</span></label>
+            <div class="upload-zone" id="uploadZone">
+              <input type="file" id="evidenceFiles" multiple accept="image/*,video/*" onchange="handleFiles(this.files)"/>
+              <div class="upload-icon">📎</div>
+              <div class="upload-text">Click to upload or drag & drop</div>
+              <div class="upload-hint">Accepted: JPG, PNG, MP4, MOV, AVI · Max 10MB per file</div>
+              <div class="upload-size-warn" id="sizeWarn">⚠️ Some files exceed 10MB and were skipped</div>
+            </div>
+            <div class="upload-preview" id="uploadPreview"></div>
+          </div>
+          <div class="form-group">
+            <label>Any additional information</label>
+            <input type="text" id="additionalInfo" placeholder="Witnesses, recurring incidents, relationship to perpetrator (optional)…"/>
+          </div>
+          <button type="submit" class="form-submit" id="submitBtn">🔒 Submit Anonymously</button>
+          <div class="form-note">🛡 Your identity is never stored or shared. Ref ID will be provided.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PERFORMANCE -->
+<section id="performance">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="eyebrow">Results</div>
+      <h2 class="section-title">System Performance</h2>
+      <p class="section-sub">Our DistilBERT-based model outperforms baseline models across all key metrics.</p>
+    </div>
+    <div class="perf-grid">
+      <div class="perf-card reveal">
+        <h4>📊 Overall Classification Metrics — DistilBERT</h4>
+        <div class="metric-bar">
+          <div class="metric-top"><span class="metric-name">Accuracy</span><span class="metric-val">98.77%</span></div>
+          <div class="bar-track"><div class="bar-fill" data-width="98.77"></div></div>
+        </div>
+        <div class="metric-bar">
+          <div class="metric-top"><span class="metric-name">Precision</span><span class="metric-val">98.21%</span></div>
+          <div class="bar-track"><div class="bar-fill" data-width="98.21"></div></div>
+        </div>
+        <div class="metric-bar">
+          <div class="metric-top"><span class="metric-name">Recall</span><span class="metric-val">98.10%</span></div>
+          <div class="bar-track"><div class="bar-fill" data-width="98.10"></div></div>
+        </div>
+        <div class="metric-bar">
+          <div class="metric-top"><span class="metric-name">F1-Score</span><span class="metric-val">97.98%</span></div>
+          <div class="bar-track"><div class="bar-fill" data-width="97.98"></div></div>
+        </div>
+      </div>
+      <div class="perf-card reveal">
+        <h4>🤖 Accuracy Comparison — All Models</h4>
+        <div class="model-compare">
+          <div class="model-row">
+            <div class="model-dot" style="background:#1a6b5a"></div>
+            <div class="model-name">DistilBERT <span style="font-size:.75rem;color:var(--muted)">(Proposed)</span></div>
+            <div class="model-score" style="color:var(--teal)">98.77%</div>
+          </div>
+          <div class="model-row">
+            <div class="model-dot" style="background:#c4651a"></div>
+            <div class="model-name">Text CNN</div>
+            <div class="model-score" style="color:var(--amber)">91.43%</div>
+          </div>
+          <div class="model-row">
+            <div class="model-dot" style="background:#8a8278"></div>
+            <div class="model-name">Autoencoders</div>
+            <div class="model-score" style="color:var(--muted)">84.96%</div>
+          </div>
+        </div>
+        <div style="margin-top:1.5rem">
+          <h4 style="margin-bottom:1rem">🚨 High-Risk Detection</h4>
+          <div class="metric-bar">
+            <div class="metric-top"><span class="metric-name">High-Risk Detection Rate</span><span class="metric-val">94.1%</span></div>
+            <div class="bar-track"><div class="bar-fill" data-width="94.1"></div></div>
+          </div>
+          <div class="metric-bar">
+            <div class="metric-top"><span class="metric-name">Urgency Identification Rate</span><span class="metric-val">92.8%</span></div>
+            <div class="bar-track"><div class="bar-fill" data-width="92.8"></div></div>
+          </div>
+          <div class="metric-bar">
+            <div class="metric-top"><span class="metric-name">Emotion Detection Accuracy</span><span class="metric-val">93.6%</span></div>
+            <div class="bar-track"><div class="bar-fill" data-width="93.6"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="perf-card reveal">
+        <h4>🔐 Security & Anonymity</h4>
+        <div class="metric-bar">
+          <div class="metric-top"><span class="metric-name">Anonymity Preservation Rate</span><span class="metric-val">99.2%</span></div>
+          <div class="bar-track"><div class="bar-fill" data-width="99.2"></div></div>
+        </div>
+        <div class="metric-bar">
+          <div class="metric-top"><span class="metric-name">Data Security Success Rate</span><span class="metric-val">98.7%</span></div>
+          <div class="bar-track"><div class="bar-fill" data-width="98.7"></div></div>
+        </div>
+      </div>
+      <div class="perf-card reveal">
+        <h4>⚡ Speed & Throughput</h4>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem">
+          <div style="background:var(--teal-light);border-radius:12px;padding:1.2rem;text-align:center">
+            <div style="font-family:'Fraunces',serif;font-size:2rem;font-weight:700;color:var(--teal)">120<span style="font-size:1rem">ms</span></div>
+            <div style="font-size:.78rem;color:var(--muted)">Inference Time per Complaint</div>
+          </div>
+          <div style="background:var(--amber-light);border-radius:12px;padding:1.2rem;text-align:center">
+            <div style="font-family:'Fraunces',serif;font-size:2rem;font-weight:700;color:var(--amber)">620</div>
+            <div style="font-size:.78rem;color:var(--muted)">Complaints per Minute</div>
+          </div>
+        </div>
+        <p style="font-size:.85rem;color:var(--muted)">DistilBERT delivers the best throughput at 620 complaints/minute while maintaining the highest accuracy, making it ideal for real-world scalable deployment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONCLUSION -->
+<section class="conclusion-bg">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="eyebrow">Conclusion</div>
+      <h2 class="section-title" style="color:#fff">Why SafeVoice Matters</h2>
+    </div>
+    <div class="concl-grid">
+      <div class="concl-card reveal">
+        <div class="concl-num">01</div>
+        <div class="concl-title">Effective & Reliable</div>
+        <div class="concl-desc">98.77% classification accuracy, 93.6% emotion detection, and over 94% high-risk detection ensure accurate prioritization of sensitive complaints in real time.</div>
+      </div>
+      <div class="concl-card reveal">
+        <div class="concl-num">02</div>
+        <div class="concl-title">Secure & Anonymous</div>
+        <div class="concl-desc">99.2% anonymity preservation and 98.7% data security success rate guarantees confidentiality, encrypted handling, and identity-free submission.</div>
+      </div>
+      <div class="concl-card reveal">
+        <div class="concl-num">03</div>
+        <div class="concl-title">Scalable & Impactful</div>
+        <div class="concl-desc">Real-time processing at 120ms inference and 620 complaints/minute with automated escalation enables timely intervention.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRACK COMPLAINT -->
+<section id="track" class="track-section">
+  <div class="section-inner" style="width:100%">
+    <div class="track-box reveal">
+      <div class="eyebrow">Track Your Report</div>
+      <h2>Check Complaint Status</h2>
+      <p>Enter your Reference ID to see if your complaint has been accepted or rejected by the authorities.</p>
+      <div class="track-input-row">
+        <input class="track-input" id="trackInput" placeholder="e.g. SV-MS8JYJKX" maxlength="14"/>
+        <button class="track-btn" onclick="trackComplaint()">🔍 Track</button>
+      </div>
+      <div class="track-spinner" id="trackSpinner">⏳ Checking status…</div>
+      <div class="track-result" id="trackResult"></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">🛡 SafeVoice</div>
+    <ul class="footer-links">
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#performance">Performance</a></li>
+      <li><a href="#report">Report</a></li>
+      <li><a href="#track">Track</a></li>
+    </ul>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 SafeVoice — AI-Powered Anonymous Abuse Reporting Platform</span>
+    <span>Emergency: Police 100 · Women Helpline 1091 · Child Helpline 1098</span>
+  </div>
+</footer>
+
+<!-- SUCCESS MODAL -->
+<div class="modal-overlay" id="successModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="success-icon">✅</div>
+    <h3 style="text-align:center">Report Submitted!</h3>
+    <p style="text-align:center;margin-bottom:1rem">Your anonymous report has been received. Authorities have been notified and will review your complaint.</p>
+    <div style="background:var(--teal-light);border:1.5px solid #b6ddd6;border-radius:12px;padding:1.2rem;text-align:center;margin-bottom:1rem">
+      <div style="font-size:.75rem;color:var(--muted);margin-bottom:.3rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em">Your Reference ID</div>
+      <div id="refId" style="font-family:'Fraunces',serif;font-size:1.8rem;font-weight:700;color:var(--teal);letter-spacing:.05em"></div>
+      <button onclick="copyRefId()" id="copyBtn" style="margin-top:.6rem;background:var(--teal);color:#fff;border:none;padding:.4rem 1.1rem;border-radius:100px;font-size:.78rem;font-weight:700;cursor:pointer;">📋 Copy ID</button>
+    </div>
+    <div style="background:var(--amber-light);border:1px solid #f0c896;border-radius:10px;padding:.9rem 1rem;font-size:.82rem;color:var(--ink2);margin-bottom:1rem;line-height:1.6">
+      ⚠️ <strong>Important:</strong> Save your Reference ID. You will need it to track your complaint status.
+    </div>
+    <button class="form-submit" onclick="closeModal()" style="margin-top:0">✓ I've Saved My ID</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SIMPLIFIED CHATBOT — Incident Only
+     Talks to Flask /analyze → DistilBERT
+     ══════════════════════════════════════════ -->
+
+<!-- FAB -->
+<button class="chat-fab" onclick="toggleChat()" id="chatFab" aria-label="Open SafeVoice Assistant">
+  <div class="chat-pulse"></div>
+  <span id="chatFabIcon">💬</span>
+  <div class="chat-badge" id="chatBadge">1</div>
+</button>
+
+<!-- Window -->
+<div class="chatbot-window" id="chatbotWindow">
+  <div class="chatbot-header">
+    <div class="cb-avatar">🛡</div>
+    <div class="cb-header-info">
+      <h4>SafeVoice Assistant</h4>
+      <span><span class="cb-online"></span> Online · Secure &amp; Anonymous</span>
+    </div>
+    <button class="cb-close" onclick="toggleChat()">✕</button>
+  </div>
+
+  <div class="cb-messages" id="cbMessages">
+    <!-- typing indicator sits at top; messages prepend before it -->
+    <div class="cb-typing-bubble" id="cbTyping"><span></span><span></span><span></span></div>
+  </div>
+
+  <div class="cb-input-row">
+    <input
+      class="cb-input"
+      id="cbInput"
+      placeholder="Describe the incident in a few sentences…"
+      onkeydown="if(event.key==='Enter') cbSend()"
+    />
+    <button class="cb-send" onclick="cbSend()">➤</button>
+  </div>
+</div>
+
+<!-- ═══════════ PAGE SCRIPTS ═══════════ -->
+<script>
+// ── Flask backend URL ──────────────────────────────────────────────────────
+// Change this if your Flask server runs on a different port/host
+const FLASK_URL = 'http://localhost:5000';
+
+// ── GOOGLE SHEETS (unchanged from original) ────────────────────────────────
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbw9oDXrHZj-NN3744j_E0sEJ6BAaFZex97UVHZEVKXHlx4AaGY6NbC7EPiQPXNtrj6k/exec';
+const SHEET_ID  = '1M_W7thLLb_8SpUdCggp_obVxlNAcNpT2l-JrJZqIqb8';
+
+// ── Nav scroll ─────────────────────────────────────────────────────────────
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// ── Reveal on scroll ───────────────────────────────────────────────────────
+const revealEls = document.querySelectorAll('.reveal');
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+revealEls.forEach(r => revealObs.observe(r));
+
+// ── Stat counters ──────────────────────────────────────────────────────────
+const statNums = document.querySelectorAll('.stat-num[data-target]');
+const statObs  = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target, target = parseFloat(el.dataset.target);
+    const isInt = Number.isInteger(target);
+    let start = 0;
+    const step = ts => {
+      if (!start) start = ts;
+      const p = Math.min((ts - start) / 1800, 1);
+      el.textContent = isInt ? Math.floor(p * target).toLocaleString() : (p * target).toFixed(2);
+      if (p < 1) requestAnimationFrame(step);
+      else el.textContent = isInt ? target.toLocaleString() : target.toFixed(2);
+    };
+    requestAnimationFrame(step);
+    statObs.unobserve(el);
+  });
+}, { threshold: 0.5 });
+statNums.forEach(n => statObs.observe(n));
+
+// ── Animate bars ───────────────────────────────────────────────────────────
+const barObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.width = e.target.dataset.width + '%';
+      barObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll('.bar-fill').forEach(b => barObs.observe(b));
+
+// ── File upload (unchanged from original) ──────────────────────────────────
+let uploadedFiles = [];
+function handleFiles(files) {
+  const warn = document.getElementById('sizeWarn');
+  let skipped = false;
+  Array.from(files).forEach(file => {
+    if (file.size > 10 * 1024 * 1024) { skipped = true; return; }
+    if (uploadedFiles.find(f => f.name === file.name)) return;
+    uploadedFiles.push(file);
+  });
+  warn.style.display = skipped ? 'block' : 'none';
+  renderPreviews();
+}
+function renderPreviews() {
+  const container = document.getElementById('uploadPreview');
+  container.innerHTML = '';
+  uploadedFiles.forEach((file, i) => {
+    const isImg = file.type.startsWith('image/');
+    const div   = document.createElement('div');
+    div.className = 'preview-item';
+    if (isImg) {
+      const reader = new FileReader();
+      reader.onload = ev => {
+        div.innerHTML = `<img src="${ev.target.result}" style="width:54px;height:54px;object-fit:cover;border-radius:6px;border:1px solid var(--border)"/><span style="max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${file.name}</span><button class="remove" onclick="removeFile(${i})">✕</button>`;
+      };
+      reader.readAsDataURL(file);
+    } else {
+      div.innerHTML = `<span>🎬</span><span>${file.name.length > 22 ? file.name.slice(0,20)+'…' : file.name}</span><button class="remove" onclick="removeFile(${i})">✕</button>`;
+    }
+    container.appendChild(div);
+  });
+}
+function removeFile(i) { uploadedFiles.splice(i, 1); renderPreviews(); }
+
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const r = new FileReader();
+    r.onload  = () => resolve(r.result.split(',')[1]);
+    r.onerror = reject;
+    r.readAsDataURL(file);
+  });
+}
+function fileToDataURL(file) {
+  return new Promise((resolve, reject) => {
+    const r = new FileReader();
+    r.onload  = () => resolve(r.result);
+    r.onerror = reject;
+    r.readAsDataURL(file);
+  });
+}
+async function uploadToImgBB(file) {
+  const base64 = await fileToBase64(file);
+  const fd = new FormData();
+  fd.append('image', base64);
+  fd.append('key', '6d207e02198a847aa98d0a2a901485a5');
+  const res  = await fetch('https://api.imgbb.com/1/upload', { method: 'POST', body: fd });
+  const data = await res.json();
+  if (data.success) return data.data;
+  throw new Error(data.error?.message || 'Upload failed');
+}
+async function buildImagesHTML() {
+  if (!uploadedFiles.length) return '<p style="color:#888;">No files uploaded.</p>';
+  const imgs = uploadedFiles.filter(f => f.type.startsWith('image/'));
+  const vids = uploadedFiles.filter(f => f.type.startsWith('video/'));
+  let html = '';
+  if (imgs.length) {
+    html += '<p><strong>📸 Evidence Images:</strong></p>';
+    for (const file of imgs) {
+      try {
+        const img = await uploadToImgBB(file);
+        html += `<div style="margin:12px 0;padding:12px;background:#f9f9f9;border-radius:8px;"><p style="font-size:12px;color:#666;margin-bottom:8px;">📸 <strong>${file.name}</strong></p><a href="${img.url}" target="_blank"><img src="${img.url}" style="max-width:480px;width:100%;border-radius:8px;border:1px solid #ddd;display:block;" alt="${file.name}"/></a></div>`;
+      } catch {
+        const dataUrl = await fileToDataURL(file);
+        html += `<div style="margin:12px 0;"><p style="font-size:12px;color:#666;margin-bottom:4px;">📸 ${file.name}</p><img src="${dataUrl}" style="max-width:480px;width:100%;border-radius:8px;border:1px solid #ddd;" alt="${file.name}"/></div>`;
+      }
+    }
+  }
+  if (vids.length) {
+    html += '<p style="margin-top:14px;"><strong>🎬 Video Files:</strong></p>';
+    vids.forEach(f => { html += `<p style="font-size:13px;color:#555;">▶ ${f.name} — ${(f.size/1024/1024).toFixed(2)} MB</p>`; });
+  }
+  return html;
+}
+
+const zone = document.getElementById('uploadZone');
+zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('dragover'); });
+zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
+zone.addEventListener('drop', e => { e.preventDefault(); zone.classList.remove('dragover'); handleFiles(e.dataTransfer.files); });
+
+// ── Google Sheets helpers (unchanged) ─────────────────────────────────────
+async function saveToSheet(data) {
+  try {
+    await fetch(SHEET_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body:JSON.stringify({action:'save',...data}) });
+  } catch(e) { console.warn('Sheet save error:', e); }
+}
+function parseCSV(text) {
+  const rows = [];
+  for (const line of text.trim().split('\n')) {
+    const cols = []; let cur = '', inQ = false;
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i];
+      if (ch === '"') { inQ = !inQ; }
+      else if (ch === ',' && !inQ) { cols.push(cur.trim()); cur = ''; }
+      else { cur += ch; }
+    }
+    cols.push(cur.trim()); rows.push(cols);
+  }
+  return rows;
+}
+async function getStatus(refId) {
+  try {
+    const csvUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&sheet=Complaints&gid=1795341744`;
+    const res  = await fetch(csvUrl);
+    if (!res.ok) throw new Error('Sheet fetch failed: ' + res.status);
+    const text = await res.text();
+    const rows = parseCSV(text);
+    if (rows.length < 2) return { error: 'Sheet is empty' };
+    const h = rows[0];
+    const iRef  = h.findIndex(x => x.toLowerCase().includes('reference'));
+    const iType = h.findIndex(x => x.toLowerCase().includes('incident'));
+    const iLoc  = h.findIndex(x => x.toLowerCase().includes('location'));
+    const iDate = h.findIndex(x => x.toLowerCase().includes('date'));
+    const iSub  = h.findIndex(x => x.toLowerCase().includes('submitted'));
+    const iStat = h.findIndex(x => x.toLowerCase().includes('status'));
+    const iUpd  = h.findIndex(x => x.toLowerCase().includes('updated'));
+    for (let i = 1; i < rows.length; i++) {
+      const row   = rows[i];
+      const rowId = (row[iRef] || '').replace(/"/g,'').trim().toUpperCase();
+      if (rowId === refId.toUpperCase()) {
+        return { refId: row[iRef]||refId, incidentType: row[iType]||'—', location: row[iLoc]||'—', dateOccurred: row[iDate]||'—', submittedAt: row[iSub]||'—', status: row[iStat]||'Pending', updatedAt: row[iUpd]||'—' };
+      }
+    }
+    return { error: 'Not found' };
+  } catch(e) { return null; }
+}
+
+// ── FORM SUBMIT (unchanged from original) ─────────────────────────────────
+document.getElementById('complaintForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  btn.textContent = '⏳ Sending…'; btn.disabled = true;
+  const refId = 'SV-' + Math.random().toString(36).substr(2,8).toUpperCase();
+  const form  = this;
+  const incidentType   = form.querySelector('select').value || 'Not specified';
+  const location       = form.querySelectorAll('input')[0].value || 'Not specified';
+  const dateOccurred   = form.querySelectorAll('input')[1].value || 'Not specified';
+  const emotionalState = form.querySelectorAll('select')[1].value || 'Not specified';
+  const description    = form.querySelector('textarea').value;
+  const additional     = document.getElementById('additionalInfo').value || 'None';
+  const fileNames      = uploadedFiles.length ? uploadedFiles.map(f=>f.name).join(', ') : 'No files uploaded';
+  const submittedAt    = new Date().toLocaleString('en-IN',{timeZone:'Asia/Kolkata'});
+  btn.textContent = '📎 Processing files…';
+  const imagesHTML = await buildImagesHTML();
+  const siteURL   = window.location.href.split('#')[0];
+  const acceptURL = `${siteURL}?action=accept&refId=${refId}&token=${btoa(refId+'_accept')}`;
+  const rejectURL = `${siteURL}?action=reject&refId=${refId}&token=${btoa(refId+'_reject')}`;
+  const fullMessage =
+    `<div style="font-family:sans-serif;font-size:14px;line-height:1.8;">` +
+    `<table style="width:100%;border-collapse:collapse;background:#f5f2ee;padding:12px;border-radius:8px;">` +
+    `<tr><td style="padding:6px 12px;font-weight:bold;color:#1a6b5a;width:180px;">🔖 Reference ID</td><td><strong>${refId}</strong></td></tr>` +
+    `<tr><td style="padding:6px 12px;font-weight:bold;color:#1a6b5a;">📋 Incident Type</td><td>${incidentType}</td></tr>` +
+    `<tr><td style="padding:6px 12px;font-weight:bold;color:#1a6b5a;">📍 Location</td><td>${location}</td></tr>` +
+    `<tr><td style="padding:6px 12px;font-weight:bold;color:#1a6b5a;">📅 Date Occurred</td><td>${dateOccurred}</td></tr>` +
+    `<tr><td style="padding:6px 12px;font-weight:bold;color:#1a6b5a;">💭 Emotional State</td><td>${emotionalState}</td></tr>` +
+    `<tr><td style="padding:6px 12px;font-weight:bold;color:#1a6b5a;">🕐 Submitted At</td><td>${submittedAt}</td></tr>` +
+    `</table><div style="background:#fff;border-left:4px solid #1a6b5a;padding:12px 16px;border-radius:4px;margin:16px 0;">` +
+    `<p style="font-weight:bold;color:#1a6b5a;margin-bottom:6px;">📝 Description</p><p>${description.replace(/\n/g,'<br>')}</p></div>` +
+    `<p><strong>ℹ️ Additional Info:</strong> ${additional}</p><hr style="border:none;border-top:1px dashed #ccc;margin:16px 0;"/>` +
+    imagesHTML +
+    `<hr style="border:none;border-top:2px solid #1a6b5a;margin:20px 0;"/>` +
+    `<div style="background:#f0fdf4;border:1.5px solid #86efac;border-radius:12px;padding:20px;text-align:center;">` +
+    `<p style="font-size:15px;font-weight:bold;color:#065f46;margin-bottom:6px;">⚖️ Police Action Required</p>` +
+    `<p style="font-size:13px;color:#555;margin-bottom:16px;">Review the complaint and accept or reject below.</p>` +
+    `<a href="${acceptURL}" style="display:inline-block;background:#065f46;color:#fff;padding:12px 28px;border-radius:100px;font-weight:bold;font-size:14px;text-decoration:none;margin-right:12px;">✅ Accept</a>` +
+    `<a href="${rejectURL}" style="display:inline-block;background:#991b1b;color:#fff;padding:12px 28px;border-radius:100px;font-weight:bold;font-size:14px;text-decoration:none;">❌ Reject</a>` +
+    `</div></div>`;
+  const templateParams = {
+    name: 'Anonymous Report — ' + refId,
+    message: fullMessage,
+    time: submittedAt,
+    ref_id: refId, incident_type: incidentType, location, date_occurred: dateOccurred,
+    emotional_state: emotionalState, description, additional,
+    files_attached: fileNames, submitted_at: submittedAt
+  };
+  try {
+    btn.textContent = '📤 Sending…';
+    await saveToSheet({ refId, incidentType, location, dateOccurred, emotionalState, description, additional, fileNames, submittedAt, status:'Pending' });
+    const response = await emailjs.send('service_ntm50wr', 'template_shqb259', templateParams);
+    console.log('EmailJS:', response.status, response.text);
+    document.getElementById('refId').textContent = refId;
+    document.getElementById('successModal').classList.add('open');
+    form.reset(); uploadedFiles = []; renderPreviews();
+  } catch(err) {
+    console.error('EmailJS error:', err);
+    alert('⚠️ Failed to send report.\nError: ' + (err.text || JSON.stringify(err)));
+  } finally {
+    btn.textContent = '🔒 Submit Anonymously'; btn.disabled = false;
+  }
+});
+
+function copyRefId() {
+  const id = document.getElementById('refId').textContent;
+  navigator.clipboard.writeText(id).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = '✅ Copied!'; btn.style.background = '#065f46';
+    setTimeout(() => { btn.textContent = '📋 Copy ID'; btn.style.background = 'var(--teal)'; }, 2000);
+  });
+}
+
+// ── Track complaint (unchanged) ────────────────────────────────────────────
+async function trackComplaint() {
+  const input   = document.getElementById('trackInput').value.trim().toUpperCase();
+  const result  = document.getElementById('trackResult');
+  const spinner = document.getElementById('trackSpinner');
+  if (!input || input.length < 5) {
+    result.className = 'track-result notfound show';
+    result.style.display = 'block';
+    result.innerHTML = '<p style="color:var(--muted);text-align:center;">⚠️ Please enter a valid Reference ID (e.g. SV-MS8JYJKX)</p>';
+    return;
+  }
+  result.className = 'track-result'; result.style.display = 'none';
+  spinner.className = 'track-spinner show';
+  try {
+    const data = await getStatus(input);
+    spinner.className = 'track-spinner';
+    if (!data) {
+      result.className = 'track-result notfound show'; result.style.display = 'block';
+      result.innerHTML = `<p style="text-align:center;color:var(--muted);">⚠️ Could not connect to the server.</p>`;
+      return;
+    }
+    if (data.error) {
+      result.className = 'track-result notfound show'; result.style.display = 'block';
+      result.innerHTML = `<p style="text-align:center;font-size:1.3rem;">🔍</p><p style="text-align:center;font-weight:700;">No complaint found</p><p style="text-align:center;color:var(--muted);font-size:.85rem;">No record for <strong>${input}</strong>. Please check your ID.</p>`;
+      return;
+    }
+    const rawStatus   = (data.status || 'Pending').toString().trim().toLowerCase();
+    const statusClass = rawStatus.includes('accept') ? 'accepted' : rawStatus.includes('reject') ? 'rejected' : 'pending';
+    const statusEmoji = statusClass === 'accepted' ? '✅' : statusClass === 'rejected' ? '❌' : '⏳';
+    const statusLabel = statusClass === 'accepted' ? 'Accepted' : statusClass === 'rejected' ? 'Rejected' : 'Pending Review';
+    result.className = `track-result ${statusClass} show`; result.style.display = 'block';
+    result.innerHTML = `
+      <div class="status-badge ${statusClass}">${statusEmoji} ${statusLabel}</div>
+      <div class="track-detail-row"><span class="track-detail-label">Reference ID</span><span class="track-detail-val">${data.refId}</span></div>
+      <div class="track-detail-row"><span class="track-detail-label">Incident Type</span><span class="track-detail-val">${data.incidentType}</span></div>
+      <div class="track-detail-row"><span class="track-detail-label">Location</span><span class="track-detail-val">${data.location}</span></div>
+      <div class="track-detail-row"><span class="track-detail-label">Submitted At</span><span class="track-detail-val">${data.submittedAt}</span></div>
+      <div class="track-detail-row"><span class="track-detail-label">Last Updated</span><span class="track-detail-val">${data.updatedAt}</span></div>
+      ${statusClass==='pending'  ? '<p style="margin-top:.75rem;font-size:.82rem;color:var(--muted);text-align:center;">⏳ Under review. Please check back later.</p>' : ''}
+      ${statusClass==='accepted' ? '<p style="margin-top:.75rem;font-size:.82rem;color:#065f46;text-align:center;font-weight:600;">✅ Your complaint is being acted upon by authorities.</p>' : ''}
+      ${statusClass==='rejected' ? '<p style="margin-top:.75rem;font-size:.82rem;color:#991b1b;text-align:center;font-weight:600;">❌ Complaint could not be accepted at this time.</p>' : ''}`;
+  } catch(e) {
+    spinner.className = 'track-spinner';
+    result.className = 'track-result notfound show'; result.style.display = 'block';
+    result.innerHTML = `<p style="text-align:center;color:var(--muted);">⚠️ Error: ${e.message}</p>`;
+  }
+}
+document.getElementById('trackInput').addEventListener('keydown', e => { if (e.key === 'Enter') trackComplaint(); });
+
+// ── Accept/Reject URL param handler (unchanged) ────────────────────────────
+async function handleActionFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  const action = params.get('action'), refId = params.get('refId'), token = params.get('token');
+  if (!action || !refId || !token) return;
+  let expected;
+  try { expected = btoa(refId + '_' + action); } catch(e) { return; }
+  if (token !== expected) { alert('⚠️ Invalid action link.'); return; }
+  document.body.innerHTML = `
+    <div class="action-page"><div class="action-box">
+      <div class="action-icon">${action==='accept'?'⚖️':'🔍'}</div>
+      <h2>Complaint ${refId}</h2>
+      <p>You are about to <strong>${action==='accept'?'ACCEPT':'REJECT'}</strong> this complaint.</p>
+      <div class="action-btns" id="actionBtns">
+        ${action==='accept'
+          ? `<button class="btn-accept" onclick="confirmAction('${refId}','accept')">✅ Confirm Accept</button>`
+          : `<button class="btn-reject" onclick="confirmAction('${refId}','reject')">❌ Confirm Reject</button>`}
+        <button onclick="window.location.href=window.location.pathname" style="background:var(--border);border:none;padding:.85rem 1.5rem;border-radius:100px;cursor:pointer;font-weight:600;">Cancel</button>
+      </div>
+      <div class="action-done" id="actionDone"></div>
+    </div></div>`;
+}
+async function confirmAction(refId, action) {
+  document.getElementById('actionBtns').innerHTML = '<p style="color:var(--muted)">⏳ Updating…</p>';
+  const updatedAt = new Date().toLocaleString('en-IN',{timeZone:'Asia/Kolkata'});
+  const status    = action === 'accept' ? 'Accepted' : 'Rejected';
+  try {
+    await fetch(SHEET_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body:JSON.stringify({action:'update', refId, status, updatedAt}) });
+    const done = document.getElementById('actionDone');
+    done.className = 'action-done show';
+    done.innerHTML = `<div style="margin-top:1rem;padding:1.2rem;background:${action==='accept'?'#d1fae5':'#fee2e2'};border-radius:12px;"><p style="font-size:1.5rem;">${action==='accept'?'✅':'❌'}</p><p style="font-weight:700;color:${action==='accept'?'#065f46':'#991b1b'}">Complaint ${status}!</p><p style="font-size:.85rem;color:var(--muted);margin-top:.3rem">The reporter can now see the updated status.</p></div>`;
+  } catch {
+    alert('Error updating status. Please try again.');
+    document.getElementById('actionBtns').innerHTML = `<button class="btn-${action}" onclick="confirmAction('${refId}','${action}')">Retry</button>`;
+  }
+}
+handleActionFromURL();
+
+function closeModal() { document.getElementById('successModal').classList.remove('open'); showToast(); }
+function showToast()  { const t=document.getElementById('toast'); t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3500); }
+function toggleMenu() { const n=document.querySelector('.nav-links'); n.style.display = n.style.display==='flex'?'none':'flex'; }
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({behavior:'smooth',block:'start'}); }
+  });
+});
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════
+     CHATBOT SCRIPT — stripped to incident-only flow
+     Sends text → Flask /analyze → DistilBERT → shows result
+     ═══════════════════════════════════════════════════════════ -->
+<script>
+// ── chatbot state ──────────────────────────────────────────────────────────
+const CB = {
+  step: 'GREETING',   // GREETING → WAITING_INCIDENT → DONE
+  initialized: false
+};
+
+// ── helpers ────────────────────────────────────────────────────────────────
+function cbTime() {
+  return new Date().toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' });
+}
+
+function cbAddMsg(html, who) {
+  // who = 'bot' | 'user'
+  const msgs   = document.getElementById('cbMessages');
+  const typing = document.getElementById('cbTyping');
+  const wrap   = document.createElement('div');
+  wrap.className = `cb-msg ${who}`;
+  wrap.innerHTML = `<div class="cb-bubble">${html}</div><div class="cb-time">${cbTime()}</div>`;
+  msgs.insertBefore(wrap, typing);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function cbShowTyping(show) {
+  const t = document.getElementById('cbTyping');
+  t.classList.toggle('show', show);
+  document.getElementById('cbMessages').scrollTop = 99999;
+}
+
+function cbSetInputState(enabled, placeholder) {
+  const inp = document.getElementById('cbInput');
+  inp.disabled    = !enabled;
+  inp.placeholder = placeholder || 'Describe the incident in a few sentences…';
+}
+
+// ── open / close chatbot ───────────────────────────────────────────────────
+function toggleChat() {
+  const win   = document.getElementById('chatbotWindow');
+  const badge = document.getElementById('chatBadge');
+  const icon  = document.getElementById('chatFabIcon');
+  win.classList.toggle('open');
+
+  if (win.classList.contains('open')) {
+    if (badge) badge.style.display = 'none';
+    icon.textContent = '✕';
+    if (!CB.initialized) { CB.initialized = true; cbInit(); }
+  } else {
+    icon.textContent = '💬';
+  }
+}
+
+// ── initial greeting ───────────────────────────────────────────────────────
+function cbInit() {
+  setTimeout(() => {
+    cbAddMsg(
+      '👋 Welcome to <strong>SafeVoice</strong>.<br>' +
+      'This is a <strong>safe, anonymous</strong> channel. Your identity is never stored.',
+      'bot'
+    );
+  }, 300);
+
+  setTimeout(() => {
+    cbAddMsg(
+      '🛡 Please describe the incident in <strong>a few sentences</strong> — ' +
+      'what happened, and how you feel right now. No name or location needed.',
+      'bot'
+    );
+    CB.step = 'WAITING_INCIDENT';
+    cbSetInputState(true, 'Type your incident description here and press Enter…');
+  }, 1100);
+}
+
+// ── send button / Enter ────────────────────────────────────────────────────
+async function cbSend() {
+  const inp  = document.getElementById('cbInput');
+  const text = inp.value.trim();
+  if (!text) return;
+
+  // Only accept input when we are waiting for the incident
+  if (CB.step !== 'WAITING_INCIDENT') return;
+
+  inp.value = '';
+  cbAddMsg(text, 'user');
+  cbSetInputState(false, 'Analyzing your report…');
+  CB.step = 'ANALYZING';
+
+  cbShowTyping(true);
+
+  try {
+    // ── call Flask /analyze ──────────────────────────────────────────────
+    const res  = await fetch(`${FLASK_URL}/analyze`, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ text })
+    });
+
+    if (!res.ok) throw new Error(`Server error ${res.status}`);
+    const data = await res.json();   // { sentiment, confidence, id }
+
+    cbShowTyping(false);
+    cbRenderResult(data.sentiment, data.confidence, data.id);
+
+  } catch (err) {
+    cbShowTyping(false);
+    cbAddMsg(
+      `⚠️ <strong>Could not reach the AI server.</strong><br>` +
+      `Make sure Flask is running at <code>${FLASK_URL}</code>.<br>` +
+      `<em>${err.message}</em>`,
+      'bot'
+    );
+    // Let the user retry
+    CB.step = 'WAITING_INCIDENT';
+    cbSetInputState(true, 'Please try again…');
+  }
+}
+
+// ── render DistilBERT result in chatbot ────────────────────────────────────
+function cbRenderResult(sentiment, confidence, dbId) {
+  const pct = (confidence * 100).toFixed(1);
+
+  if (sentiment === 'NEGATIVE') {
+    // ── Emergency / distress case ────────────────────────────────────────
+    cbAddMsg(
+      `<div class="cb-result-card negative">` +
+        `<div class="cb-result-title">🚨 Emergency Situation Detected</div>` +
+        `<p style="margin-bottom:.5rem;">Our AI has identified <strong>signs of distress or danger</strong> in your report (confidence: ${pct}%). Please reach out immediately:</p>` +
+        `<a class="cb-helpline-link" href="tel:100">🚔 Police Emergency — <strong>100</strong></a>` +
+        `<a class="cb-helpline-link" href="tel:1091">👩 Women Helpline — <strong>1091</strong></a>` +
+        `<a class="cb-helpline-link" href="tel:1098">🧒 Child Helpline — <strong>1098</strong></a>` +
+        `<a class="cb-helpline-link" href="tel:181">🏠 Domestic Violence — <strong>181</strong></a>` +
+        `<a class="cb-helpline-link" href="tel:1930">💻 Cyber Crime — <strong>1930</strong></a>` +
+        `<p style="margin-top:.5rem;font-size:.77rem;color:#b03030;">Your report has been saved (ID #${dbId}). Stay safe. 💙</p>` +
+      `</div>`,
+      'bot'
+    );
+  } else {
+    // ── Positive / calm case ─────────────────────────────────────────────
+    cbAddMsg(
+      `<div class="cb-result-card positive">` +
+        `<div class="cb-result-title">✅ Case Registered</div>` +
+        `<p>Your report has been received and <strong>registered</strong> in our system (confidence: ${pct}%).</p>` +
+        `<div class="cb-reg-badge">🗂 Case Registered — ID #${dbId}</div>` +
+        `<p style="margin-top:.6rem;font-size:.78rem;color:#065f46;">Authorities will review your case. If the situation escalates, call <strong>100</strong> immediately.</p>` +
+      `</div>`,
+      'bot'
+    );
+  }
+
+  // Follow-up prompt
+  setTimeout(() => {
+    cbAddMsg(
+      '💙 If you have more information to add, please use the <strong>Report Form</strong> on this page — it generates a traceable Reference ID.',
+      'bot'
+    );
+    CB.step = 'DONE';
+    cbSetInputState(false, 'Report submitted. Use the form for more details.');
+  }, 700);
+}
+</script>
+
+</body>
+</html>
+
   --bg:#f5f2ee;
   --bg2:#ece8e2;
   --surface:#ffffff;
