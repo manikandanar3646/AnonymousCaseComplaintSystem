@@ -1,5 +1,13 @@
 # 🛡️ Anonymous Complaint Reporting System
 
+> **🔒 Confidentiality Notice**
+>
+> This repository contains **only the publicly shareable frontend HTML file** of the project for demonstration and portfolio purposes.
+>
+> The **backend source code, AI/NLP implementation, trained model files, database configuration, environment variables, API credentials, and project-specific packages/dependencies are confidential and have not been included in this repository**.
+>
+> The architecture, workflow, and technology descriptions provided below are included to explain the overall project and demonstrate the concepts and technologies used. The complete implementation is not publicly available.
+
 An **AI-powered anonymous complaint reporting system** designed to provide a secure and confidential platform for reporting sensitive incidents such as **child abuse, domestic violence, sexual harassment, corruption, and misconduct** without requiring users to reveal their personal identity.
 
 The system combines **Natural Language Processing (NLP), DistilBERT-based sentiment analysis, location services, complaint tracking, and automated email communication** to make complaint reporting easier, faster, and more accessible.
