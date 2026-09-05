@@ -2,11 +2,11 @@
 
 > **🔒 Confidentiality Notice**
 >
-> This repository contains **only the publicly shareable frontend HTML file** of the project for demonstration and portfolio purposes.
+> This repository contains a **publicly shareable frontend demonstration** of the project. The available HTML file includes the **frontend structure, embedded CSS styling, and a small amount of JavaScript code** required for the demonstrated interface.
 >
-> The **backend source code, AI/NLP implementation, trained model files, database configuration, environment variables, API credentials, and project-specific packages/dependencies are confidential and have not been included in this repository**.
+> The **backend source code, complete JavaScript implementation, AI/NLP implementation, DistilBERT model files, database configuration, backend packages/dependencies, API credentials, environment variables, and other project-specific implementation details are confidential and have not been included in this repository**.
 >
-> The architecture, workflow, and technology descriptions provided below are included to explain the overall project and demonstrate the concepts and technologies used. The complete implementation is not publicly available.
+> The README provides a high-level overview of the complete system's architecture, workflow, modules, and technologies used for portfolio and demonstration purposes. The publicly available file **does not represent the complete application**.
 
 An **AI-powered anonymous complaint reporting system** designed to provide a secure and confidential platform for reporting sensitive incidents such as **child abuse, domestic violence, sexual harassment, corruption, and misconduct** without requiring users to reveal their personal identity.
 
